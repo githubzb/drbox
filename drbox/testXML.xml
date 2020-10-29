@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+<![CDATA[
+function fetch(index){}
+]]>
+<!-- error code -->
+<code>1000</code>
+<!-- error message -->
+<error>handle success</error>
+<!-- response data -->
+<data>
+<!-- product list -->
+    <list>
+        <product>
+            <name>product name 1</name>
+            <price>$12.00</price>
+        </product>
+        <product>
+            <name>product name 2</name>
+            <price>$34.00</price>
+        </product>
+    </list>
+<!-- fetch page info -->
+    <page index="2" total="10000"/>
+</data>
+</response>
