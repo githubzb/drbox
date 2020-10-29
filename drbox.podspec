@@ -34,7 +34,7 @@ Pod::Spec.new do |spec|
   #
 
 #  spec.source       = { :git => "https://github.com/githubzb/drbox.git", :tag => "#{spec.version}" }
-  spec.source       = { :git => "https://github.com/githubzb/drbox.git", :commit => "13232" }
+  spec.source       = { :git => "https://github.com/githubzb/drbox.git", :commit => "6321291" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
