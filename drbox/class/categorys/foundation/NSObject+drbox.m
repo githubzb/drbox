@@ -22,19 +22,6 @@ static inline NSMutableSet *DRSwizzledClasses() {
     return set;
 }
 
-static NSMutableDictionary *swizzleMap;
-static inline void DRAddSwizzleClassMethod(NSString *clsName, NSString *method) {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        swizzleMap = [[NSMutableDictionary alloc] init];
-    });
-    NSMutableArray *methods = [swizzleMap valueForKey:clsName];
-    if (!methods) {
-        methods = [[NSMutableArray alloc] init];
-    }
-    [methods addObject:method];
-}
-
 /// swizzle 类的getClass方法
 static inline void DRSwizzleGetClass(Class class, Class statedClass) {
     SEL selector = @selector(class);

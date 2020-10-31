@@ -354,7 +354,7 @@ authenticationPolicy:(DRKeyChainStoreAuthenticationPolicy)policy
                 CFRelease(dicRef);
             }
         }
-#elif
+#else
         status = SecItemAdd((__bridge CFDictionaryRef)query, NULL);
 #endif
     }
@@ -445,7 +445,7 @@ useDataProtectionKeychain:YES
                 CFRelease(dicRef);
             }
         }
-#elif
+#else
         status = SecItemAdd((__bridge CFDictionaryRef)query, NULL);
 #endif
     }

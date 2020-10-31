@@ -45,10 +45,10 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "class/**/*.{h,m,mm}"
-  spec.exclude_files = "class/CaptureDevice/*", "class/network/*"
+  spec.source_files  = "#{spec.name}/class/**/*.{h,m,mm}"
+  spec.exclude_files = "#{spec.name}/class/CaptureDevice/*", "#{spec.name}/class/network/*"
 
-  spec.public_header_files = "class/**/*.{h}"
+  spec.public_header_files = "#{spec.name}/class/**/*.{h}"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -72,7 +72,7 @@ Pod::Spec.new do |spec|
   #
 
   # spec.framework  = "SomeFramework"
-  spec.frameworks = 'UIKit', 'CoreFoundation', 'CoreText', 'CoreGraphics', 'CoreImage', 'QuartzCore', 'ImageIO', 'AssetsLibrary', 'Accelerate', 'MobileCoreServices', 'SystemConfiguration'
+  spec.frameworks = 'UIKit', 'CoreFoundation', 'CoreText', 'CoreGraphics', 'CoreImage', 'QuartzCore', 'ImageIO', 'Accelerate', 'CoreServices', 'SystemConfiguration'
 
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
