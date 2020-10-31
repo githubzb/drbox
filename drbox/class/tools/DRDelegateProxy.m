@@ -66,10 +66,6 @@
 @end
 @implementation DRDelegateProxy
 
-- (void)dealloc{
-    NSLog(@"-----:DRDelegateProxy dealloc");
-}
-
 - (instancetype)initWithProtocol:(Protocol *)protocol{
     NSCParameterAssert(protocol != NULL);
     self = [super init];
@@ -102,8 +98,10 @@
                 [items addObject:bk];
             }
         }else{
+#if DEBUG
             NSString *str = [NSString stringWithFormat:@"block与aSelector签名不匹配：%@", err.localizedDescription];
             NSAssert(NO, str);
+#endif
         }
     }];
 }

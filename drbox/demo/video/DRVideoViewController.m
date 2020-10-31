@@ -8,6 +8,7 @@
 
 #import "DRVideoViewController.h"
 #import "Drbox.h"
+#import "DRCaptureDevice.h"
 
 @interface DRVideoViewController ()
 

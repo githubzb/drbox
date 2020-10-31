@@ -56,7 +56,7 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 #import <drbox/DRTableView.h>
 
 // capture
-#import <drbox/DRCaptureDevice.h>
+//#import <drbox/DRCaptureDevice.h>
 
 #else
 
@@ -103,6 +103,6 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 #import "DRTableView.h"
 
 // capture
-#import "DRCaptureDevice.h"
+//#import "DRCaptureDevice.h"
 
 #endif
