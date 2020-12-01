@@ -36,6 +36,7 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 #import <drbox/UIGestureRecognizer+drbox.h>
 #import <drbox/UITextField+drbox.h>
 #import <drbox/UIDevice+drbox.h>
+#import <drbox/UITableView+drbox.h>
 
 // tools
 #import <drbox/DRDictionaryParser.h>
@@ -86,6 +87,7 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 #import "UIGestureRecognizer+drbox.h"
 #import "UITextField+drbox.h"
 #import "UIDevice+drbox.h"
+#import "UITableView+drbox.h"
 
 // tools
 #import "DRDictionaryParser.h"

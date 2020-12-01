@@ -91,8 +91,15 @@
     return [self dr_ipAddressWithIfaName:@"pdp_ip0"];
 }
 
+/// 在 iOS11 中 1G == 1000M 而不是1024M, iOS11 之前是 1024
 - (int64_t)dr_diskSpace{
     NSError *error = nil;
+    if (@available(iOS 4.0, *)) {
+        NSURL *url = [NSURL fileURLWithPath:NSHomeDirectory()];
+        NSDictionary *dic = [url resourceValuesForKeys:@[NSURLVolumeTotalCapacityKey] error:&error];
+        if (error) return -1;
+        return [dic[NSURLVolumeTotalCapacityKey] longLongValue];
+    }
     NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:&error];
     if (error) return -1;
     int64_t space =  [[attrs objectForKey:NSFileSystemSize] longLongValue];
@@ -100,8 +107,15 @@
     return space;
 }
 
+/// 在 iOS11 中 1G == 1000M 而不是1024M, iOS11 之前是 1024
 - (int64_t)dr_diskSpaceFree{
     NSError *error = nil;
+    if (@available(iOS 11.0, *)) {
+        NSURL *url = [NSURL fileURLWithPath:NSHomeDirectory()];
+        NSDictionary *dic = [url resourceValuesForKeys:@[NSURLVolumeAvailableCapacityForImportantUsageKey] error:&error];
+        if (error) return -1;
+        return [dic[NSURLVolumeAvailableCapacityForImportantUsageKey] longLongValue];
+    }
     NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:&error];
     if (error) return -1;
     int64_t space =  [[attrs objectForKey:NSFileSystemFreeSize] longLongValue];
@@ -109,6 +123,7 @@
     return space;
 }
 
+/// 在 iOS11 中 1G == 1000M 而不是1024M, iOS11 之前是 1024
 - (int64_t)dr_diskSpaceUsed{
     int64_t total = self.dr_diskSpace;
     int64_t free = self.dr_diskSpaceFree;

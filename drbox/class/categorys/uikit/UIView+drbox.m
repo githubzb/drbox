@@ -246,8 +246,8 @@
                 numberOfTouchesRequired:(NSUInteger)numOfTouches
                               withBlock:(void (^)(UITapGestureRecognizer * _Nonnull))block{
     if (!block) return;
-    UITapGestureRecognizer *tap = [self getTapGestureWithNumberOfTapsRequired:numOfTaps
-                                                      numberOfTouchesRequired:numOfTouches];
+    UITapGestureRecognizer *tap = [self dr_getTapGestureWithNumberOfTapsRequired:numOfTaps
+                                                         numberOfTouchesRequired:numOfTouches];
     if (!tap) {
         tap = [[UITapGestureRecognizer alloc] init];
         [self addGestureRecognizer:tap];
@@ -255,10 +255,28 @@
     [tap dr_addActionBlock:block];
 }
 
+- (void)dr_setClickBlock:(void (^)(__kindof UIView * _Nonnull))block{
+    [self dr_setClickNumberOfTapsRequired:1 numberOfTouchesRequired:1 withBlock:block];
+}
+
+- (void)dr_setClickNumberOfTapsRequired:(NSUInteger)numOfTaps
+                numberOfTouchesRequired:(NSUInteger)numOfTouches
+                              withBlock:(void (^)(__kindof UIView * _Nonnull))block{
+    if (!block) return;
+    UITapGestureRecognizer *tap = [self dr_getTapGestureWithNumberOfTapsRequired:numOfTaps
+                                                         numberOfTouchesRequired:numOfTouches];
+    if (!tap) {
+        tap = [[UITapGestureRecognizer alloc] init];
+        [self addGestureRecognizer:tap];
+    }
+    [tap dr_removeAllActionBlocks];
+    [tap dr_addActionBlock:block];
+}
+
 #pragma mark - private
 /// 获取视图的tap手势
-- (UITapGestureRecognizer *)getTapGestureWithNumberOfTapsRequired:(NSUInteger)numOfTaps
-                      numberOfTouchesRequired:(NSUInteger)numOfTouches{
+- (UITapGestureRecognizer *)dr_getTapGestureWithNumberOfTapsRequired:(NSUInteger)numOfTaps
+                                             numberOfTouchesRequired:(NSUInteger)numOfTouches{
     for (UIGestureRecognizer *ges in self.gestureRecognizers) {
         if ([ges isKindOfClass:[UITapGestureRecognizer class]]) {
             UITapGestureRecognizer *tap = (UITapGestureRecognizer *)ges;

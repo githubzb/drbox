@@ -95,6 +95,22 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)dr_addClickNumberOfTapsRequired:(NSUInteger)numOfTaps
                 numberOfTouchesRequired:(NSUInteger)numOfTouches
                               withBlock:(void(^)(UITapGestureRecognizer *tap))block;
+/**
+ 设置tap手势（单手点击一次，注意：该方法会清除之前-dr_addClickOnceWithOneHand:添加的所有回调，确保回调只有一个）
+ 
+ @param block 手势触发回调，v：当前触发手势的视图
+ */
+- (void)dr_setClickBlock:(void(^)(__kindof UIView *v))block;
+
+/**
+ 设置tap手势（注意：该方法会清除之前添加的所有回调，确保回调只有一个）
+ @param numOfTaps 点击次数
+ @param numOfTouches 触摸屏幕的点数
+ @param block 手势触发回调，v：当前触发手势的视图
+ */
+- (void)dr_setClickNumberOfTapsRequired:(NSUInteger)numOfTaps
+                numberOfTouchesRequired:(NSUInteger)numOfTouches
+                              withBlock:(void(^)(__kindof UIView *v))block;
 
 @end
 
