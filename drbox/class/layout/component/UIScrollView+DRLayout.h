@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否对contentView异步计算布局，默认：YES
 @property (nonatomic, assign) BOOL dr_layoutAsynchronously;
 
+/// 让scrollview重新对contentview进行布局
+- (void)dr_setNeedsLayout;
+
 @end
 
 NS_ASSUME_NONNULL_END

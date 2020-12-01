@@ -186,4 +186,45 @@
     return [self dr_stringWithFormat:@"yyyy-MM-dd"];
 }
 
+- (NSDate *)dr_convertLunar{
+    // 实例化农历calendar
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+    df.dateStyle = NSDateFormatterFullStyle;
+    df.calendar = calendar;
+    NSString *lunarStr = [df stringFromDate:self];
+    NSInteger year = [[lunarStr substringToIndex:4] integerValue];
+    NSInteger month = [calendar component:NSCalendarUnitMonth fromDate:self];
+    NSInteger day = [calendar component:NSCalendarUnitDay fromDate:self];
+    NSInteger h = [calendar component:NSCalendarUnitHour fromDate:self];
+    NSInteger m = [calendar component:NSCalendarUnitMinute fromDate:self];
+    NSInteger s = [calendar component:NSCalendarUnitSecond fromDate:self];
+    NSString *str = [NSString stringWithFormat:@"%ld-%02ld-%02ld %02ld:%02ld:%02ld", year, month, day, h, m, s];
+    return [NSDate dr_dateWithString:str format:@"yyyy-MM-dd HH:mm:ss"];
+}
+
+- (NSDate *)dr_convertSolar{
+    // TODO: 待完善
+    CFAbsoluteTime startTime =CFAbsoluteTimeGetCurrent();
+    NSInteger year = [self dr_year];
+    NSInteger m = [self dr_month];
+    NSInteger d = [self dr_day];
+    
+    NSDate *date = [self dr_dateByAddingDays:1];
+    NSDate *ld = [date dr_convertLunar];
+    while (ld.dr_year != year || ld.dr_month != m || ld.dr_day != d) {
+        if (ld.dr_month < m || ld.dr_year < year || ld.dr_day < d) {
+            date = [date dr_dateByAddingDays:1];
+        }else{
+            date = [date dr_dateByAddingDays:-1];
+        }
+        ld = [date dr_convertLunar];
+    }
+    CFAbsoluteTime linkTime = (CFAbsoluteTimeGetCurrent() - startTime);
+
+    NSLog(@"Linked in %f ms", linkTime *1000.0);
+    return date;
+}
+
 @end

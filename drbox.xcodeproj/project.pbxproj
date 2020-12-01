@@ -39,10 +39,18 @@
 		6D519EF624C53A4A0029C4BB /* NSData+drbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D519EF524C53A4A0029C4BB /* NSData+drbox.m */; };
 		6D519EF924C577FB0029C4BB /* DrFoundationCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D519EF824C577FB0029C4BB /* DrFoundationCategoryViewController.m */; };
 		6D519EFC24C592DA0029C4BB /* NSString+drbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D519EFB24C592DA0029C4BB /* NSString+drbox.m */; };
+		6D5449E0256BF08F00102AAA /* DRKVOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5449DF256BF08F00102AAA /* DRKVOViewController.m */; };
+		6D566B852557E72C005DBFD2 /* DRLocalNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D566B842557E72C005DBFD2 /* DRLocalNotificationViewController.m */; };
+		6D566B882557E773005DBFD2 /* sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6D566B872557E773005DBFD2 /* sound.wav */; };
+		6D566B8D2557F3F2005DBFD2 /* DRSandboxTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D566B8C2557F3F2005DBFD2 /* DRSandboxTool.m */; };
+		6D566B9025580D6C005DBFD2 /* bg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6D566B8F25580D6C005DBFD2 /* bg.mp4 */; };
 		6D5D6B6024DF93CA00BC7703 /* DRCacheViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D6B5F24DF93CA00BC7703 /* DRCacheViewController.mm */; };
+		6D64D272256A6A6400DBD4C3 /* DRKVObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D64D271256A6A6400DBD4C3 /* DRKVObserver.m */; };
+		6D64D277256A879F00DBD4C3 /* NSObject+DRKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D64D276256A879F00DBD4C3 /* NSObject+DRKVO.m */; };
 		6D65544424C6991200A16879 /* NSNumber+drbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D65544324C6991200A16879 /* NSNumber+drbox.m */; };
 		6D65544724C6DD6700A16879 /* NSArray+drbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D65544624C6DD6700A16879 /* NSArray+drbox.m */; };
 		6D65544A24C6E87E00A16879 /* NSDictionary+drbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D65544924C6E87E00A16879 /* NSDictionary+drbox.m */; };
+		6D7FFB2A254E937200CA90F0 /* DRTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7FFB29254E937200CA90F0 /* DRTestViewController.m */; };
 		6DD0F6A62519892000FEC788 /* DRCaptureDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD0F6A52519892000FEC788 /* DRCaptureDevice.m */; };
 		6DD3E6B525009E8600718C80 /* DRBlockDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD3E6B425009E8600718C80 /* DRBlockDescription.m */; };
 		6DD7C2C824EA96D700C23568 /* blur.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7C2C724EA96D700C23568 /* blur.png */; };
@@ -153,14 +161,28 @@
 		6D519EF824C577FB0029C4BB /* DrFoundationCategoryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrFoundationCategoryViewController.m; sourceTree = "<group>"; };
 		6D519EFA24C592DA0029C4BB /* NSString+drbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+drbox.h"; sourceTree = "<group>"; };
 		6D519EFB24C592DA0029C4BB /* NSString+drbox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+drbox.m"; sourceTree = "<group>"; };
+		6D5449DE256BF08F00102AAA /* DRKVOViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRKVOViewController.h; sourceTree = "<group>"; };
+		6D5449DF256BF08F00102AAA /* DRKVOViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRKVOViewController.m; sourceTree = "<group>"; };
+		6D566B832557E72C005DBFD2 /* DRLocalNotificationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRLocalNotificationViewController.h; sourceTree = "<group>"; };
+		6D566B842557E72C005DBFD2 /* DRLocalNotificationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRLocalNotificationViewController.m; sourceTree = "<group>"; };
+		6D566B872557E773005DBFD2 /* sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound.wav; sourceTree = "<group>"; };
+		6D566B8B2557F3F2005DBFD2 /* DRSandboxTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRSandboxTool.h; sourceTree = "<group>"; };
+		6D566B8C2557F3F2005DBFD2 /* DRSandboxTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRSandboxTool.m; sourceTree = "<group>"; };
+		6D566B8F25580D6C005DBFD2 /* bg.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = bg.mp4; sourceTree = "<group>"; };
 		6D5D6B5E24DF93CA00BC7703 /* DRCacheViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRCacheViewController.h; sourceTree = "<group>"; };
 		6D5D6B5F24DF93CA00BC7703 /* DRCacheViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DRCacheViewController.mm; sourceTree = "<group>"; };
+		6D64D270256A6A6400DBD4C3 /* DRKVObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRKVObserver.h; sourceTree = "<group>"; };
+		6D64D271256A6A6400DBD4C3 /* DRKVObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRKVObserver.m; sourceTree = "<group>"; };
+		6D64D275256A879F00DBD4C3 /* NSObject+DRKVO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+DRKVO.h"; sourceTree = "<group>"; };
+		6D64D276256A879F00DBD4C3 /* NSObject+DRKVO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DRKVO.m"; sourceTree = "<group>"; };
 		6D65544224C6991200A16879 /* NSNumber+drbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSNumber+drbox.h"; sourceTree = "<group>"; };
 		6D65544324C6991200A16879 /* NSNumber+drbox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+drbox.m"; sourceTree = "<group>"; };
 		6D65544524C6DD6700A16879 /* NSArray+drbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+drbox.h"; sourceTree = "<group>"; };
 		6D65544624C6DD6700A16879 /* NSArray+drbox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+drbox.m"; sourceTree = "<group>"; };
 		6D65544824C6E87E00A16879 /* NSDictionary+drbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+drbox.h"; sourceTree = "<group>"; };
 		6D65544924C6E87E00A16879 /* NSDictionary+drbox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+drbox.m"; sourceTree = "<group>"; };
+		6D7FFB28254E937200CA90F0 /* DRTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRTestViewController.h; sourceTree = "<group>"; };
+		6D7FFB29254E937200CA90F0 /* DRTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRTestViewController.m; sourceTree = "<group>"; };
 		6DD0F6A42519892000FEC788 /* DRCaptureDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRCaptureDevice.h; sourceTree = "<group>"; };
 		6DD0F6A52519892000FEC788 /* DRCaptureDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRCaptureDevice.m; sourceTree = "<group>"; };
 		6DD3E6B325009E8600718C80 /* DRBlockDescription.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRBlockDescription.h; sourceTree = "<group>"; };
@@ -299,6 +321,8 @@
 		6D1EB20C24BD9D8C00DF8952 /* drbox */ = {
 			isa = PBXGroup;
 			children = (
+				6D566B8F25580D6C005DBFD2 /* bg.mp4 */,
+				6D566B872557E773005DBFD2 /* sound.wav */,
 				6DE62BBF2513139F00FAC110 /* drbox.entitlements */,
 				6D1EB22B24BDB08100DF8952 /* demo */,
 				6D1EB22624BD9FF400DF8952 /* class */,
@@ -319,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				6D1EB22824BDA08600DF8952 /* Drbox.h */,
+				6D60BB9B256114B00085B1F0 /* kvo */,
 				6DD0F6A3251988FC00FEC788 /* CaptureDevice */,
 				6DE5E95124EF73BC002D2A71 /* network */,
 				6DE0DBD924ECCDE4001C6FEE /* image */,
@@ -352,6 +377,8 @@
 		6D1EB22B24BDB08100DF8952 /* demo */ = {
 			isa = PBXGroup;
 			children = (
+				6D5449DD256BF07200102AAA /* kvo */,
+				6D566B822557E708005DBFD2 /* notificaion */,
 				6D12CAF42518490000B27179 /* video */,
 				6DE5E95524EFD7F5002D2A71 /* network */,
 				6DE0317424E7954A00266235 /* uikit */,
@@ -372,6 +399,8 @@
 				6D2F0CF825032832003988FA /* DRBlockDescViewController.m */,
 				6DE62BBC2512F11700FAC110 /* DRKeyChainsViewController.h */,
 				6DE62BBD2512F11700FAC110 /* DRKeyChainsViewController.m */,
+				6D7FFB28254E937200CA90F0 /* DRTestViewController.h */,
+				6D7FFB29254E937200CA90F0 /* DRTestViewController.m */,
 			);
 			path = demo;
 			sourceTree = "<group>";
@@ -403,6 +432,35 @@
 			path = component;
 			sourceTree = "<group>";
 		};
+		6D5449DD256BF07200102AAA /* kvo */ = {
+			isa = PBXGroup;
+			children = (
+				6D5449DE256BF08F00102AAA /* DRKVOViewController.h */,
+				6D5449DF256BF08F00102AAA /* DRKVOViewController.m */,
+			);
+			path = kvo;
+			sourceTree = "<group>";
+		};
+		6D566B822557E708005DBFD2 /* notificaion */ = {
+			isa = PBXGroup;
+			children = (
+				6D566B832557E72C005DBFD2 /* DRLocalNotificationViewController.h */,
+				6D566B842557E72C005DBFD2 /* DRLocalNotificationViewController.m */,
+			);
+			path = notificaion;
+			sourceTree = "<group>";
+		};
+		6D60BB9B256114B00085B1F0 /* kvo */ = {
+			isa = PBXGroup;
+			children = (
+				6D64D270256A6A6400DBD4C3 /* DRKVObserver.h */,
+				6D64D271256A6A6400DBD4C3 /* DRKVObserver.m */,
+				6D64D275256A879F00DBD4C3 /* NSObject+DRKVO.h */,
+				6D64D276256A879F00DBD4C3 /* NSObject+DRKVO.m */,
+			);
+			path = kvo;
+			sourceTree = "<group>";
+		};
 		6D85C70224C1C70E00F1B6AF /* tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,6 +479,8 @@
 				6D26045724FF2ECD00BB0D95 /* DRDelegateProxy.m */,
 				6DD3E6B325009E8600718C80 /* DRBlockDescription.h */,
 				6DD3E6B425009E8600718C80 /* DRBlockDescription.m */,
+				6D566B8B2557F3F2005DBFD2 /* DRSandboxTool.h */,
+				6D566B8C2557F3F2005DBFD2 /* DRSandboxTool.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -682,6 +742,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D566B882557E773005DBFD2 /* sound.wav in Resources */,
+				6D566B9025580D6C005DBFD2 /* bg.mp4 in Resources */,
 				6DD7C2C824EA96D700C23568 /* blur.png in Resources */,
 				6DF4348A24CA8ADE0006A7C1 /* testXML.xml in Resources */,
 				6DD7C2CA24EA9FE100C23568 /* mask.png in Resources */,
@@ -754,6 +816,7 @@
 				6DF4348D24CA8B320006A7C1 /* DRXMLParserViewController.m in Sources */,
 				6DE5E95424EF7696002D2A71 /* DRURLSession.m in Sources */,
 				6DDD575324D424FE000E7FE2 /* DRThreadPool.m in Sources */,
+				6D566B852557E72C005DBFD2 /* DRLocalNotificationViewController.m in Sources */,
 				6DF72E5E24FA8BD00039A572 /* UIControl+drbox.m in Sources */,
 				6DE9BDD724DCDF8400951E8E /* DRMemoryCache.m in Sources */,
 				6DE0317324E7837800266235 /* UIImage+drbox.m in Sources */,
@@ -765,6 +828,8 @@
 				6D50177424D6F14D008D0FCF /* DRScrollViewController.m in Sources */,
 				6D3A237E24E51B3200EAAC37 /* NSKeyedUnarchiver+drbox.m in Sources */,
 				6D65544424C6991200A16879 /* NSNumber+drbox.m in Sources */,
+				6D64D272256A6A6400DBD4C3 /* DRKVObserver.m in Sources */,
+				6D566B8D2557F3F2005DBFD2 /* DRSandboxTool.m in Sources */,
 				6D1EB21524BD9D8C00DF8952 /* ViewController.m in Sources */,
 				6D3A237824E4E57A00EAAC37 /* NSNotificationCenter+drbox.m in Sources */,
 				6DEAD6FF2505CC5C005EEE87 /* UITableView+drbox.m in Sources */,
@@ -778,6 +843,7 @@
 				6D1EB20F24BD9D8C00DF8952 /* AppDelegate.m in Sources */,
 				6DF72E6424FB4FB90039A572 /* UIBarButtonItem+drbox.m in Sources */,
 				6DF4349124CAC9B00006A7C1 /* DRLayout.m in Sources */,
+				6D7FFB2A254E937200CA90F0 /* DRTestViewController.m in Sources */,
 				6DE62BBE2512F11700FAC110 /* DRKeyChainsViewController.m in Sources */,
 				6D1F1C6924FDF29000C9134A /* DRTextFieldViewController.m in Sources */,
 				6D0DA8F524F20E250040D629 /* DRSecurityPolicy.m in Sources */,
@@ -792,6 +858,7 @@
 				6DF72E6724FB58960039A572 /* UIGestureRecognizer+drbox.m in Sources */,
 				6DE2896024E8C30500D3D103 /* DRCGTools.m in Sources */,
 				6D12CAF72518491C00B27179 /* DRVideoViewController.m in Sources */,
+				6D64D277256A879F00DBD4C3 /* NSObject+DRKVO.m in Sources */,
 				6D519EFC24C592DA0029C4BB /* NSString+drbox.m in Sources */,
 				6DE2896B24E92E7200D3D103 /* DRImageDrawDemo.m in Sources */,
 				6D1EB22024BD9D8E00DF8952 /* main.m in Sources */,
@@ -811,6 +878,7 @@
 				6D2F0CF925032832003988FA /* DRBlockDescViewController.m in Sources */,
 				6DE2A21724D5595A009DB24E /* DRLayoutTransaction.m in Sources */,
 				6DE2A21A24D55FB6009DB24E /* DRLock.m in Sources */,
+				6D5449E0256BF08F00102AAA /* DRKVOViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

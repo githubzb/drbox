@@ -288,6 +288,7 @@ static inline dispatch_queue_t DRTableCellCacheGetReleaseQueue() {
         [_tableView registerClass:[UITableViewCell class]
            forCellReuseIdentifier:DRTableViewCellIdentifier];
         [self addSubview:_tableView];
+        self.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }
@@ -397,6 +398,7 @@ static inline dispatch_queue_t DRTableCellCacheGetReleaseQueue() {
     UIView *view = [self.cellCache viewAtIndexPath:indexPath];
     [[cell.contentView viewWithTag:DRTableViewCellTag] removeFromSuperview];
     [cell.contentView addSubview:view];
+    cell.backgroundColor = tableView.backgroundColor;
     return cell;
 }
 

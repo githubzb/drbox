@@ -47,6 +47,15 @@
             };
         }
     }
+    
+    self.scrollView.dr_contentView.dr_layoutFinishBlock = ^(__kindof UIView * _Nonnull view) {
+        NSLog(@"---布局完成");
+    };
+    
+    dispatch_after_on_main_queue(10, ^{
+        NSLog(@"开始重新布局");
+        [self.scrollView dr_setNeedsLayout];
+    });
 }
 
 - (void)loadView{

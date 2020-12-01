@@ -76,7 +76,7 @@
         proxy = [DRDelegateProxy proxyWithProtocol:@protocol(UITableViewDelegate)];
         [self dr_setAssociateStrongValue:proxy key:_cmd];
     }
-    if (!self.delegate || self.delegate != proxy) {
+    if (self.delegate == nil || (!self.delegate && self.delegate != proxy)) {
         proxy.proxiedDelegate = self.delegate;
         self.delegate = (id)proxy;
     }

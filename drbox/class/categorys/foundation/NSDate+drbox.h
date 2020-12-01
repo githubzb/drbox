@@ -119,6 +119,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)dr_yyyy_MM_dd;
 
 
+/// 公历转农历日期
+- (NSDate *)dr_convertLunar;
+/// 农历转公历日期
+- (NSDate *)dr_convertSolar;
 
 @end
 

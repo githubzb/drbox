@@ -19,7 +19,8 @@
               withBlock:^(UIScrollView *scrollView){
         [orgInv invokeWithTarget:scrollView];
         if ([scrollView isContentViewEnabled]) {
-            if (scrollView.dr_contentView.dr_isLayoutEnabled){
+            if (scrollView.dr_contentView.dr_isLayoutEnabled && [scrollView dr_needsLayout]){
+                [scrollView dr_setLayoutFinish];
                 // 装配布局节点
                 [scrollView.dr_contentView dr_setUpLayout];
                 // 计算contentView尺寸
@@ -88,7 +89,20 @@
     return YES; // 默认
 }
 
+- (void)dr_setNeedsLayout{
+    [self dr_setAssociateCopyValue:@(YES) key:@selector(dr_needsLayout)];
+    [self setNeedsLayout];
+}
+
 #pragma mark - private
+- (BOOL)dr_needsLayout{
+    NSNumber *num = [self dr_associateValueForKey:_cmd];
+    if (!num) return YES; // 默认YES
+    return [num boolValue];
+}
+- (void)dr_setLayoutFinish{
+    [self dr_setAssociateCopyValue:@(NO) key:@selector(dr_needsLayout)];
+}
 - (BOOL)isContentViewEnabled{
     return [self dr_associateValueForKey:@selector(dr_contentView)] != nil;
 }

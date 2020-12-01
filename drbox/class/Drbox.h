@@ -46,9 +46,12 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 #import <drbox/DRDelegateProxy.h>
 #import <drbox/DRBlockDescription.h>
 #import <drbox/DRKeyChainStore.h>
+#import <drbox/DRSandboxTool.h>
 
 // cache
 #import <drbox/DRCache.h>
+// KVO
+#import <drbox/NSObject+DRKVO.h>
 
 // layout
 #import <drbox/UIView+DRLayout.h>
@@ -93,6 +96,10 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 #import "DRDelegateProxy.h"
 #import "DRBlockDescription.h"
 #import "DRKeyChainStore.h"
+#import "DRSandboxTool.h"
+
+// KVO
+#import "NSObject+DRKVO.h"
 
 // cache
 #import "DRCache.h"
