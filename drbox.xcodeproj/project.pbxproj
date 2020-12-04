@@ -63,6 +63,7 @@
 		6DE0317A24E79EF300266235 /* DRImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE0317924E79EF300266235 /* DRImageViewController.m */; };
 		6DE0317D24E7A34B00266235 /* smallGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6DE0317C24E7A34B00266235 /* smallGif.gif */; };
 		6DE0317F24E7A7FC00266235 /* mypdf.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6DE0317E24E7A7FC00266235 /* mypdf.pdf */; };
+		6DE15D59257A7C2700325B48 /* DRClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE15D58257A7C2700325B48 /* DRClassInfo.m */; };
 		6DE2896024E8C30500D3D103 /* DRCGTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE2895F24E8C30500D3D103 /* DRCGTools.m */; };
 		6DE2896324E8D34900D3D103 /* DRCGToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE2896224E8D34900D3D103 /* DRCGToolsViewController.m */; };
 		6DE2896624E8D4F300D3D103 /* UIView+drbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE2896524E8D4F300D3D103 /* UIView+drbox.m */; };
@@ -203,6 +204,8 @@
 		6DE0317924E79EF300266235 /* DRImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRImageViewController.m; sourceTree = "<group>"; };
 		6DE0317C24E7A34B00266235 /* smallGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = smallGif.gif; sourceTree = "<group>"; };
 		6DE0317E24E7A7FC00266235 /* mypdf.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = mypdf.pdf; sourceTree = "<group>"; };
+		6DE15D57257A7C2700325B48 /* DRClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRClassInfo.h; sourceTree = "<group>"; };
+		6DE15D58257A7C2700325B48 /* DRClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRClassInfo.m; sourceTree = "<group>"; };
 		6DE2895E24E8C30500D3D103 /* DRCGTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRCGTools.h; sourceTree = "<group>"; };
 		6DE2895F24E8C30500D3D103 /* DRCGTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRCGTools.m; sourceTree = "<group>"; };
 		6DE2896124E8D34900D3D103 /* DRCGToolsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRCGToolsViewController.h; sourceTree = "<group>"; };
@@ -343,6 +346,7 @@
 			isa = PBXGroup;
 			children = (
 				6D1EB22824BDA08600DF8952 /* Drbox.h */,
+				6DE15D56257A7BFF00325B48 /* model */,
 				6D60BB9B256114B00085B1F0 /* kvo */,
 				6DD0F6A3251988FC00FEC788 /* CaptureDevice */,
 				6DE5E95124EF73BC002D2A71 /* network */,
@@ -560,6 +564,15 @@
 			children = (
 			);
 			path = image;
+			sourceTree = "<group>";
+		};
+		6DE15D56257A7BFF00325B48 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				6DE15D57257A7C2700325B48 /* DRClassInfo.h */,
+				6DE15D58257A7C2700325B48 /* DRClassInfo.m */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		6DE2896C24E93C1D00D3D103 /* view */ = {
@@ -841,6 +854,7 @@
 				6D1F1C6624FDF13A00C9134A /* UITextField+drbox.m in Sources */,
 				6DE5E95824EFD814002D2A71 /* DRURLSessionViewController.m in Sources */,
 				6D1EB20F24BD9D8C00DF8952 /* AppDelegate.m in Sources */,
+				6DE15D59257A7C2700325B48 /* DRClassInfo.m in Sources */,
 				6DF72E6424FB4FB90039A572 /* UIBarButtonItem+drbox.m in Sources */,
 				6DF4349124CAC9B00006A7C1 /* DRLayout.m in Sources */,
 				6D7FFB2A254E937200CA90F0 /* DRTestViewController.m in Sources */,

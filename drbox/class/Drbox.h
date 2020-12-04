@@ -54,6 +54,9 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 // KVO
 #import <drbox/NSObject+DRKVO.h>
 
+// model
+#import <drbox/DRClassInfo.h>
+
 // layout
 #import <drbox/UIView+DRLayout.h>
 #import <drbox/UIScrollView+DRLayout.h>
@@ -105,6 +108,9 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 
 // cache
 #import "DRCache.h"
+
+// model
+#import "DRClassInfo.h"
 
 // layout
 #import "UIView+DRLayout.h"

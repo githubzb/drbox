@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class DRClassInfo;
 @interface NSObject (drbox)
 
 /**
@@ -117,6 +118,10 @@ NS_ASSUME_NONNULL_BEGIN
  @return YES：hook成功 or 失败
 */
 - (BOOL)dr_hookMethod:(SEL)orgSel withBlock:(id)block orgInvocation:(NSInvocation *_Nullable*_Nullable)invocation;
+
+
+/// 当前类的信息
+@property (nonatomic, readonly, class) DRClassInfo *dr_classInfo;
 
 
 @end

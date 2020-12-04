@@ -9,6 +9,7 @@
 #import "NSObject+drbox.h"
 #import <objc/runtime.h>
 #import <UIKit/UIKit.h>
+#import "DRClassInfo.h"
 
 /// 用于isa swizzle
 static void *DRSubclassAssociationKey = &DRSubclassAssociationKey;
@@ -144,5 +145,8 @@ static Class DRSwizzleClass(NSObject *self){
     return YES;
 }
 
++ (DRClassInfo *)dr_classInfo{
+    return [DRClassInfo infoWithClass:self];
+}
 
 @end
