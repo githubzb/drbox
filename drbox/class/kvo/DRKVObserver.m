@@ -129,7 +129,7 @@
     }
 }
 
-- (BOOL)canAddObserverForKeyPath:(NSString *)keyPath{
+- (BOOL)needAddObserverForKeyPath:(NSString *)keyPath{
     if (keyPath.dr_trim.length==0) return NO;
     NSMutableSet *set = _maps[keyPath];
     return set.count==1;

@@ -102,13 +102,49 @@ DREncodingType DREncodingGetType(const char *typeEncoding) {
         if (typeEncoding) {
             _typeEncoding = [NSString stringWithUTF8String:typeEncoding];
             _type = DREncodingGetType(typeEncoding);
+            
+            if ((_type & DREncodingTypeMask) == DREncodingTypeObject && _typeEncoding.length) {
+                NSScanner *scanner = [NSScanner scannerWithString:_typeEncoding];
+                if ([scanner scanString:@"@\"" intoString:NULL]){
+                    
+                    NSString *clsName = nil;
+                    if ([scanner scanUpToCharactersFromSet: [NSCharacterSet characterSetWithCharactersInString:@"\"<"] intoString:&clsName]) {
+                        if (clsName.length) _cls = objc_getClass(clsName.UTF8String);
+                    }
+                    
+                    NSMutableArray *protocols = nil;
+                    while ([scanner scanString:@"<" intoString:NULL]) {
+                        NSString* protocol = nil;
+                        if ([scanner scanUpToString:@">" intoString: &protocol]) {
+                            if (protocol.length) {
+                                if (!protocols) protocols = [NSMutableArray new];
+                                [protocols addObject:protocol];
+                            }
+                        }
+                        [scanner scanString:@">" intoString:NULL];
+                    }
+                    if (protocols) {
+                        _protocols = [NSArray arrayWithArray:protocols];
+                    }
+                }
+            }
         }
     }
     return self;
 }
 
 - (NSString *)description{
-    return [NSString stringWithFormat:@"{name: %@, type: %@}", _name, _typeEncoding];
+    if (_cls) {
+        return [NSString stringWithFormat:@"{name: %@, type: %@, protocols: <%@>, cls: %@}",
+                _name,
+                _typeEncoding,
+                [_protocols componentsJoinedByString:@","],
+                NSStringFromClass(_cls)];
+    }
+    return [NSString stringWithFormat:@"{name: %@, type: %@, protocols: <%@>}",
+            _name,
+            _typeEncoding,
+            [_protocols componentsJoinedByString:@","]];
 }
 
 @end

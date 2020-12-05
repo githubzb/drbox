@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)addKeyPath:(NSString *)keyPath forTarget:(id)target action:(SEL)action;
 - (BOOL)addKeyPath:(NSString *)keyPath forBlock:(id)block;
 
-- (BOOL)canAddObserverForKeyPath:(NSString *)keyPath;
+/// 判断是否需要重新添加属性观察者
+- (BOOL)needAddObserverForKeyPath:(NSString *)keyPath;
 
 @end
 

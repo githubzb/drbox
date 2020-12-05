@@ -70,6 +70,10 @@ FOUNDATION_EXPORT DREncodingType DREncodingGetType(const char *typeEncoding);
 @property (nonatomic, readonly, strong) NSString *typeEncoding;
 /// 成员变量类型
 @property (nonatomic, readonly, assign) DREncodingType type;
+/// 成员变量如果是NSObject类型，cls为该类的class
+@property (nonatomic, readonly, assign, nullable) Class cls;
+/// 成员变量如果是id<protocol>
+@property (nonatomic, strong, readonly, nullable) NSArray<NSString *> *protocols;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

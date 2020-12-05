@@ -122,6 +122,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 当前类的信息
 @property (nonatomic, readonly, class) DRClassInfo *dr_classInfo;
+/// 当前类的信息
+@property (nonatomic, readonly) DRClassInfo *dr_classInfo;
+
+/// 对象的深度拷贝
+- (instancetype)dr_deepCopy;
 
 
 @end

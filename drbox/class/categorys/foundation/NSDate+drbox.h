@@ -104,6 +104,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// 根据时间字符串和指定的格式，初始化date对象
 + (nullable NSDate *)dr_dateWithString:(NSString *)dateString format:(NSString *)format;
 
+/// 根据时间字符串，初始化date对象
++ (nullable NSDate *)dr_dateWithString:(NSString *)dateString;
+/// 根据时间字符串，初始化date对象
++ (nullable NSDate *)dr_dateWithString:(NSString *)dateString
+                              timeZone:(nullable NSTimeZone *)timeZone
+                                locale:(nullable NSLocale *)locale;
+
 /// 根据时间字符串和指定的格式，初始化date对象（可以设置时区和地理位置）
 + (nullable NSDate *)dr_dateWithString:(NSString *)dateString
                                 format:(NSString *)format
@@ -119,10 +126,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)dr_yyyy_MM_dd;
 
 
-/// 公历转农历日期
-- (NSDate *)dr_convertLunar;
-/// 农历转公历日期
-- (NSDate *)dr_convertSolar;
+///// 公历转农历日期
+//- (NSDate *)dr_convertLunar;
+///// 农历转公历日期
+//- (NSDate *)dr_convertSolar;
 
 @end
 

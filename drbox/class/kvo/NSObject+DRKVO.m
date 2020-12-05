@@ -17,7 +17,7 @@
     if (![observer addKeyPath:keyPath forTarget:target action:action]) {
         return NO;
     }
-    if ([observer canAddObserverForKeyPath:keyPath]) {
+    if ([observer needAddObserverForKeyPath:keyPath]) {
         [self addObserver:observer
                forKeyPath:keyPath
                   options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
@@ -31,7 +31,7 @@
     if (![observer addKeyPath:keyPath forBlock:callback]) {
         return NO;
     }
-    if ([observer canAddObserverForKeyPath:keyPath]) {
+    if ([observer needAddObserverForKeyPath:keyPath]) {
         [self addObserver:observer
                forKeyPath:keyPath
                   options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld

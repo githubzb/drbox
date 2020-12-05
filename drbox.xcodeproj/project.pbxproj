@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		103045CBB2DBCAE25BC4BE58 /* Pods_drbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B802BEDCB65C983D8FE7864 /* Pods_drbox.framework */; };
+		1B1FFABE257B294500CA7237 /* NSObject+DRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFABD257B294500CA7237 /* NSObject+DRModel.m */; };
+		1B1FFAC3257B2A7C00CA7237 /* DRModelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFAC2257B2A7C00CA7237 /* DRModelViewController.m */; };
+		1B1FFAC8257B2B0A00CA7237 /* DRUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFAC7257B2B0A00CA7237 /* DRUserInfo.m */; };
 		6D00596624D7ACD100C6B56C /* DRTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D00596524D7ACD100C6B56C /* DRTableView.m */; };
 		6D00596924D7CBD000C6B56C /* DRTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D00596824D7CBD000C6B56C /* DRTableViewController.m */; };
 		6D0DA8F524F20E250040D629 /* DRSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D0DA8F424F20E250040D629 /* DRSecurityPolicy.m */; };
@@ -97,6 +100,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B1FFABC257B294500CA7237 /* NSObject+DRModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+DRModel.h"; sourceTree = "<group>"; };
+		1B1FFABD257B294500CA7237 /* NSObject+DRModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DRModel.m"; sourceTree = "<group>"; };
+		1B1FFAC1257B2A7C00CA7237 /* DRModelViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRModelViewController.h; sourceTree = "<group>"; };
+		1B1FFAC2257B2A7C00CA7237 /* DRModelViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRModelViewController.m; sourceTree = "<group>"; };
+		1B1FFAC6257B2B0A00CA7237 /* DRUserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRUserInfo.h; sourceTree = "<group>"; };
+		1B1FFAC7257B2B0A00CA7237 /* DRUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRUserInfo.m; sourceTree = "<group>"; };
+		1B1FFACC257B58AB00CA7237 /* DRModelProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRModelProtocol.h; sourceTree = "<group>"; };
 		5B802BEDCB65C983D8FE7864 /* Pods_drbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_drbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D00596424D7ACD100C6B56C /* DRTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRTableView.h; sourceTree = "<group>"; };
 		6D00596524D7ACD100C6B56C /* DRTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRTableView.m; sourceTree = "<group>"; };
@@ -284,6 +294,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B1FFAC0257B2A6100CA7237 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				1B1FFAC1257B2A7C00CA7237 /* DRModelViewController.h */,
+				1B1FFAC2257B2A7C00CA7237 /* DRModelViewController.m */,
+				1B1FFAC6257B2B0A00CA7237 /* DRUserInfo.h */,
+				1B1FFAC7257B2B0A00CA7237 /* DRUserInfo.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		6D0DA8F224F20E040040D629 /* security */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,6 +402,7 @@
 		6D1EB22B24BDB08100DF8952 /* demo */ = {
 			isa = PBXGroup;
 			children = (
+				1B1FFAC0257B2A6100CA7237 /* model */,
 				6D5449DD256BF07200102AAA /* kvo */,
 				6D566B822557E708005DBFD2 /* notificaion */,
 				6D12CAF42518490000B27179 /* video */,
@@ -571,6 +593,9 @@
 			children = (
 				6DE15D57257A7C2700325B48 /* DRClassInfo.h */,
 				6DE15D58257A7C2700325B48 /* DRClassInfo.m */,
+				1B1FFABC257B294500CA7237 /* NSObject+DRModel.h */,
+				1B1FFABD257B294500CA7237 /* NSObject+DRModel.m */,
+				1B1FFACC257B58AB00CA7237 /* DRModelProtocol.h */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -724,7 +749,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = DR;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "@zb.drbox";
 				TargetAttributes = {
 					6D1EB20924BD9D8C00DF8952 = {
@@ -825,6 +850,7 @@
 				6DE5E95B24EFDEC2002D2A71 /* DRURLRequestOperation.m in Sources */,
 				6DE0317A24E79EF300266235 /* DRImageViewController.m in Sources */,
 				6DD0F6A62519892000FEC788 /* DRCaptureDevice.m in Sources */,
+				1B1FFABE257B294500CA7237 /* NSObject+DRModel.m in Sources */,
 				6D1CB85924E623F90005E651 /* NSTimer+drbox.m in Sources */,
 				6DF4348D24CA8B320006A7C1 /* DRXMLParserViewController.m in Sources */,
 				6DE5E95424EF7696002D2A71 /* DRURLSession.m in Sources */,
@@ -837,6 +863,7 @@
 				6DE2896624E8D4F300D3D103 /* UIView+drbox.m in Sources */,
 				6D50177124D6ED05008D0FCF /* UIScrollView+DRLayout.m in Sources */,
 				6DF4349424CACE5D0006A7C1 /* UIView+DRLayout.m in Sources */,
+				1B1FFAC8257B2B0A00CA7237 /* DRUserInfo.m in Sources */,
 				6D519EF924C577FB0029C4BB /* DrFoundationCategoryViewController.m in Sources */,
 				6D50177424D6F14D008D0FCF /* DRScrollViewController.m in Sources */,
 				6D3A237E24E51B3200EAAC37 /* NSKeyedUnarchiver+drbox.m in Sources */,
@@ -857,6 +884,7 @@
 				6DE15D59257A7C2700325B48 /* DRClassInfo.m in Sources */,
 				6DF72E6424FB4FB90039A572 /* UIBarButtonItem+drbox.m in Sources */,
 				6DF4349124CAC9B00006A7C1 /* DRLayout.m in Sources */,
+				1B1FFAC3257B2A7C00CA7237 /* DRModelViewController.m in Sources */,
 				6D7FFB2A254E937200CA90F0 /* DRTestViewController.m in Sources */,
 				6DE62BBE2512F11700FAC110 /* DRKeyChainsViewController.m in Sources */,
 				6D1F1C6924FDF29000C9134A /* DRTextFieldViewController.m in Sources */,
@@ -936,6 +964,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -994,6 +1023,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1029,7 +1059,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P3U8RBA76L;
 				INFOPLIST_FILE = drbox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1049,7 +1079,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P3U8RBA76L;
 				INFOPLIST_FILE = drbox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

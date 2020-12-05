@@ -18,7 +18,12 @@
 @implementation DRPeople
 @end
 
-@interface DRKVOViewController ()
+@interface DRKVOViewController (){
+    
+    NSString *_str;
+    
+    NSInteger _index;
+}
 
 @property (nonatomic, strong) DRPeople *people;
 
@@ -42,6 +47,23 @@
     
     self.people.name = @"zhang san";
     self.people.age = 30;
+    
+    DRKVOBlock(self, @"_str", ^(NSString *str){
+        NSLog(@"成员变量_str改变了：%@", str);
+    });
+    
+    [self willChangeValueForKey:@"_str"];
+    _str = @"111";
+    [self didChangeValueForKey:@"_str"];
+    
+    [self setValue:@"ddd" forKey:@"_str"];
+    
+    [self setValue:@(1) forKey:@"_index"];
+    
+    NSLog(@"_index: %ld", _index);
+    _index = _index + 10;
+    NSLog(@"_index: %@", [self valueForKey:@"_index"]);
+    
 }
 
 - (void)printPeopleInfo{

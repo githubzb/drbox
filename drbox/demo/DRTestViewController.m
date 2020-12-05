@@ -53,6 +53,7 @@
     obj2.name = @"bbb";
     [self.list insertObject:obj2 atIndex:1];
     
+    
 //    NSIndexSet *set = [NSIndexSet indexSetWithIndex:0];
 //    [self.list addObserver:self
 //        toObjectsAtIndexes:set

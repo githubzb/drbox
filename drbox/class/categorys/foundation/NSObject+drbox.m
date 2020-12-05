@@ -149,4 +149,13 @@ static Class DRSwizzleClass(NSObject *self){
     return [DRClassInfo infoWithClass:self];
 }
 
+- (DRClassInfo *)dr_classInfo{
+    return [DRClassInfo infoWithClass:self.class];
+}
+
+- (instancetype)dr_deepCopy{
+    
+    return self;
+}
+
 @end

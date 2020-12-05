@@ -17,21 +17,48 @@
         return nil;
     }
     
+    static NSCharacterSet *dot;
     static NSDictionary *dic;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        dic = @{@"true" :   @(YES),
-                @"yes" :    @(YES),
+        dot = [NSCharacterSet characterSetWithRange:NSMakeRange('.', 1)];
+        dic = @{@"TRUE" :   @(YES),
+                @"True" :   @(YES),
+                @"true" :   @(YES),
+                @"FALSE" :  @(NO),
+                @"False" :  @(NO),
                 @"false" :  @(NO),
+                @"YES" :    @(YES),
+                @"Yes" :    @(YES),
+                @"yes" :    @(YES),
+                @"NO" :     @(NO),
+                @"No" :     @(NO),
                 @"no" :     @(NO),
-                @"nil" :    [NSNull null],
-                @"null" :   [NSNull null],
-                @"<null>" : [NSNull null]};
+                @"NIL" :    (id)kCFNull,
+                @"Nil" :    (id)kCFNull,
+                @"nil" :    (id)kCFNull,
+                @"NULL" :   (id)kCFNull,
+                @"Null" :   (id)kCFNull,
+                @"null" :   (id)kCFNull,
+                @"(NULL)" : (id)kCFNull,
+                @"(Null)" : (id)kCFNull,
+                @"(null)" : (id)kCFNull,
+                @"<NULL>" : (id)kCFNull,
+                @"<Null>" : (id)kCFNull,
+                @"<null>" : (id)kCFNull};
     });
     id num = dic[str];
-    if (num) {
-        if (num == [NSNull null]) return nil;
+    if (num != nil) {
+        if (num == (id)kCFNull) return nil;
         return num;
+    }
+    // 1.023 number
+    if ([str dr_containsCharacterSet:dot]) {
+        const char *cstring = str.UTF8String;
+        if (!cstring) return nil;
+        double num = atof(cstring);
+        if (isnan(num) || isinf(num)) return nil;
+        return @(num);
     }
     
     // hex number
@@ -47,10 +74,10 @@
         else
             return nil;
     }
-    // normal number
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    return [formatter numberFromString:string];
+    
+    const char *cstring = str.UTF8String;
+    if (!cstring) return nil;
+    return @(atoll(cstring));
 }
 
 @end
