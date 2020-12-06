@@ -16,13 +16,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface DRUserInfo : NSObject{
-    
+@interface DRBaseInfo : NSObject{
     NSInteger _age;
-    NSURL *headerUrl;
 }
 
 @property (nonatomic, copy) NSString *name;
+
+@end
+
+
+@interface DRUserInfo : DRBaseInfo{
+    
+    NSURL *headerUrl;
+}
+
 @property (nonatomic, strong) Car *car;
 @property (nonatomic, copy) NSArray *myCars;
 

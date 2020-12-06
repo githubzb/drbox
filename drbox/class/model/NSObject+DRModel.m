@@ -14,60 +14,100 @@
 
 /// 原成员变量名
 @property (nonatomic, readonly, strong) NSString *ivarName;
-/// 映射的字典key：[name, userName, myName...]
-@property (nonatomic, readonly, strong) NSArray<NSString *> *jsonKeys;
-/// 映射的字典keyPath：[user.name, user.userName, user.myName...]
-@property (nonatomic, readonly, strong) NSArray<NSString *> *jsonKeyPaths;
-/// 转json时对应的key
-@property (nonatomic, readonly, strong) NSString *toJsonKey;
 /// 自身的class
 @property (nonatomic, readonly, assign, nullable) Class cls;
-/// 如果cls为数组或字典，innerCls：表示这个数组或字典值对应的元素类型
-@property (nonatomic, readonly, assign, nullable) Class innerCls;
+/// 当前成员变量类型
 @property (nonatomic, readonly, assign) DREncodingType type;
+/// 映射的字典key：[name, userName, user.name...]
+@property (nonatomic, copy) NSArray<NSString *> *keyMappers;
+/// 转json时对应的key
+@property (nonatomic, copy) NSString *toJsonKey;
+/// 如果cls为数组或字典，innerCls：表示这个数组或字典值对应的元素类型
+@property (nonatomic, assign, nullable) Class innerCls;
 
-- (nullable instancetype)initWithIvarInfo:(DRClassIvarInfo *)info ofModel:(id<DRModel>)model;
+- (nullable instancetype)initWithIvarInfo:(DRClassIvarInfo *)info;
 
 @end
 
 @implementation _DRIvarWrap
 
-- (instancetype)initWithIvarInfo:(DRClassIvarInfo *)info ofModel:(id<DRModel>)model{
+- (instancetype)initWithIvarInfo:(DRClassIvarInfo *)info{
     if (!info || info.name.length==0) return nil;
     self = [super init];
     if (self) {
         _ivarName = [info.name copy];
         _cls = info.cls;
-        if ([model respondsToSelector:@selector(toModelContainerInnerClassMapper)]) {
-            NSDictionary *dic = [model toModelContainerInnerClassMapper];
-            if (dic.count) {
-                id val = dic[_ivarName];
-                Class cls = nil;
-                if ([val isKindOfClass:[NSString class]]) {
-                    cls = NSClassFromString(val);
-                }else {
-                    cls = object_getClass(val);
-                    if (class_isMetaClass(cls)) {
-                        
-                    }
-                }
-//                Class cls = object_getClass(dic[_ivarName]);
-                
-            }
-        }
+        _type = info.type;
     }
     return self;
 }
 
 @end
 
+@interface _DRModelWrap : NSObject
 
-static inline void DRModelSetValue(id model, _DRIvarWrap *ivar, id value){
-    if (!model || !ivar) return;
-    if ([ivar.cls isKindOfClass: [NSString class]]) {
-        
+/// 自身的class
+@property (nonatomic, readonly, assign, nullable) Class cls;
+/// 当前model的成员变量
+@property (nonatomic, readonly, strong) NSSet<_DRIvarWrap *> *ivars;
+
+- (nullable instancetype)initWithModelClass:(Class)cls;
+
++ (nullable instancetype)modelClass:(Class)cls;
+
+@end
+
+@implementation _DRModelWrap
+
+- (instancetype)initWithModelClass:(Class)cls{
+    if (!cls) return nil;
+    self = [super init];
+    if (self) {
+        _cls = cls;
+        DRClassInfo *info = [DRClassInfo infoWithClass:cls];
+        NSMutableSet *set = [NSMutableSet setWithCapacity:info.ivarInfos.count];
+        while (info) {
+            for (DRClassIvarInfo *ivar in [info.ivarInfos allValues]) {
+                _DRIvarWrap *iw = [[_DRIvarWrap alloc] initWithIvarInfo:ivar];
+                if (iw.ivarName) [set addObject:iw];
+            }
+            if (info.superCls &&
+                info.superCls != [NSObject class] &&
+                info.superCls != [NSProxy class]) {
+                info = info.superClsInfo;
+            }else{
+                info = nil;
+            }
+        }
+        _ivars = [NSSet setWithSet:set];
     }
+    return self;
 }
+
++ (instancetype)modelClass:(Class)cls{
+    if (!cls) return nil;
+    static CFMutableDictionaryRef cache;
+    static dispatch_once_t onceToken;
+    static dispatch_semaphore_t lock;
+    dispatch_once(&onceToken, ^{
+        cache = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+        lock = dispatch_semaphore_create(1);
+    });
+    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    _DRModelWrap *modelWrap = CFDictionaryGetValue(cache, (__bridge const void *)cls);
+    dispatch_semaphore_signal(lock);
+    if (!modelWrap) {
+        modelWrap = [[_DRModelWrap alloc] initWithModelClass:cls];
+        if (modelWrap) {
+            dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+            CFDictionarySetValue(cache, (__bridge const void *)cls, (__bridge const void *)modelWrap);
+            dispatch_semaphore_signal(lock);
+        }
+    }
+    return modelWrap;
+}
+
+@end
 
 
 @implementation NSObject (DRModel)
@@ -76,15 +116,12 @@ static inline void DRModelSetValue(id model, _DRIvarWrap *ivar, id value){
     if (!dic || dic == (id)kCFNull) return nil;
     if (![dic isKindOfClass:[NSDictionary class]]) return nil;
     Class cls = [self class];
-    DRClassInfo *info = [DRClassInfo infoWithClass:cls];
-    if (!info) return nil;
-    NSObject *instance = [cls new];
-    NSArray *ivars = [info.ivarInfos allKeys];
-    for (NSString *ivarName in ivars) {
-        NSString *key = [ivarName hasPrefix:@"_"] ? [ivarName substringFromIndex:1] : ivarName;
-        id val = [self transformValue:dic[key]];
-        [instance setValue:val forKey:ivarName];
+    _DRModelWrap *mw = [_DRModelWrap modelClass:cls];
+    if (!mw) return nil;
+    for (_DRIvarWrap *ivar in mw.ivars) {
+        NSLog(@"ivar.name: %@", ivar.ivarName);
     }
+    NSObject *instance = [cls new];
     return instance;
 }
 

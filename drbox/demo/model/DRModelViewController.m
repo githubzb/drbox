@@ -20,7 +20,6 @@
 
 @property (nonatomic, readonly) NSString *name;
 
-
 @end
 
 @implementation DRModelViewController
@@ -29,7 +28,7 @@
     [super viewDidLoad];
     
     DRUserInfo *info = [DRUserInfo modelWithDictionary:@{@"name": @"zangsan", @"age": @30, @"headerUrl": @"https://www.baidu.com", @"car": @{@"name": @"jeep"}}];
-    NSLog(@"info: %@", info);
+//    NSLog(@"info: %@", info);
     
 }
 
