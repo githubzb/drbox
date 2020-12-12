@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, class) NSString *dr_appVersion;
 @property (nonatomic, readonly, class) NSString *dr_bundleIdentifier;
 @property (nonatomic, readonly, class) NSString *dr_bundleName;
+@property (nonatomic, readonly, class) NSString *dr_displayName;
 /**
  当前app支持的设备方向，方向是UIInterfaceOrientation的枚举字符串格式，
  可以通过+dr_convertOrientationWithString:转换成对应的枚举

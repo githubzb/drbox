@@ -9,6 +9,46 @@
 #import "NSObject+DRModel.h"
 #import "DRClassInfo.h"
 #import "DRModelProtocol.h"
+#import "NSNumber+drbox.h"
+
+typedef NS_ENUM (NSUInteger, DREncodingNSType) {
+    DREncodingTypeNSUnknown = 0,
+    DREncodingTypeNSString,
+    DREncodingTypeNSMutableString,
+    DREncodingTypeNSValue,
+    DREncodingTypeNSNumber,
+    DREncodingTypeNSDecimalNumber,
+    DREncodingTypeNSData,
+    DREncodingTypeNSMutableData,
+    DREncodingTypeNSDate,
+    DREncodingTypeNSURL,
+    DREncodingTypeNSArray,
+    DREncodingTypeNSMutableArray,
+    DREncodingTypeNSDictionary,
+    DREncodingTypeNSMutableDictionary,
+    DREncodingTypeNSSet,
+    DREncodingTypeNSMutableSet
+};
+
+static inline DREncodingNSType DRClassGetNSType(Class cls) {
+    if (!cls) return DREncodingTypeNSUnknown;
+    if ([cls isSubclassOfClass:[NSMutableString class]]) return DREncodingTypeNSMutableString;
+    if ([cls isSubclassOfClass:[NSString class]]) return DREncodingTypeNSString;
+    if ([cls isSubclassOfClass:[NSDecimalNumber class]]) return DREncodingTypeNSDecimalNumber;
+    if ([cls isSubclassOfClass:[NSNumber class]]) return DREncodingTypeNSNumber;
+    if ([cls isSubclassOfClass:[NSValue class]]) return DREncodingTypeNSValue;
+    if ([cls isSubclassOfClass:[NSMutableData class]]) return DREncodingTypeNSMutableData;
+    if ([cls isSubclassOfClass:[NSData class]]) return DREncodingTypeNSData;
+    if ([cls isSubclassOfClass:[NSDate class]]) return DREncodingTypeNSDate;
+    if ([cls isSubclassOfClass:[NSURL class]]) return DREncodingTypeNSURL;
+    if ([cls isSubclassOfClass:[NSMutableArray class]]) return DREncodingTypeNSMutableArray;
+    if ([cls isSubclassOfClass:[NSArray class]]) return DREncodingTypeNSArray;
+    if ([cls isSubclassOfClass:[NSMutableDictionary class]]) return DREncodingTypeNSMutableDictionary;
+    if ([cls isSubclassOfClass:[NSDictionary class]]) return DREncodingTypeNSDictionary;
+    if ([cls isSubclassOfClass:[NSMutableSet class]]) return DREncodingTypeNSMutableSet;
+    if ([cls isSubclassOfClass:[NSSet class]]) return DREncodingTypeNSSet;
+    return DREncodingTypeNSUnknown;
+}
 
 @interface _DRIvarWrap : NSObject
 
@@ -18,6 +58,8 @@
 @property (nonatomic, readonly, assign, nullable) Class cls;
 /// 当前成员变量类型
 @property (nonatomic, readonly, assign) DREncodingType type;
+/// 对应需要特殊处理的NS类型
+@property (nonatomic, readonly, assign) DREncodingNSType nsType;
 /// 映射的字典key：[name, userName, user.name...]
 @property (nonatomic, copy) NSArray<NSString *> *keyMappers;
 /// 转json时对应的key
@@ -38,6 +80,7 @@
         _ivarName = [info.name copy];
         _cls = info.cls;
         _type = info.type;
+        _nsType = DRClassGetNSType(_cls);
     }
     return self;
 }
@@ -83,6 +126,67 @@
     }
     return self;
 }
+
+static inline BOOL DREncodingTypeIsCNumber(DREncodingType type) {
+    switch (type & DREncodingTypeMask) {
+        case DREncodingTypeBool:
+        case DREncodingTypeInt8:
+        case DREncodingTypeUInt8:
+        case DREncodingTypeInt16:
+        case DREncodingTypeUInt16:
+        case DREncodingTypeInt32:
+        case DREncodingTypeUInt32:
+        case DREncodingTypeInt64:
+        case DREncodingTypeUInt64:
+        case DREncodingTypeFloat:
+        case DREncodingTypeDouble:
+        case DREncodingTypeLongDouble: return YES;
+        default: return NO;
+    }
+}
+
+/**
+ 设置class实例的成员变量值
+ 
+ @param instance class实例
+ @param ivar class的成员变量
+ @param map class对应的映射字典
+ */
+static inline void DRSetClassInstanceIvarValue(NSObject *instance, _DRIvarWrap *ivar, NSDictionary *map){
+    if (!instance) return;
+    id value = nil; // map中对应ivar的值
+    for (NSString *keyPath in ivar.keyMappers) {
+        value = [map valueForKeyPath:keyPath];
+        if (value) break;
+    }
+    if (DREncodingTypeIsCNumber(ivar.type)) {
+        // 当前ivar是数字类型
+        if ([value isKindOfClass:[NSString class]]) {
+            value = [NSNumber dr_numberWithString:value];
+        }
+        if (![value isKindOfClass:[NSNumber class]]) {
+            value = [NSNumber numberWithInt:0];
+        }
+    }else if (ivar.nsType){
+        
+        
+        
+    }else if ((ivar.type & DREncodingTypeMask) == DREncodingTypeSEL){
+//        if (<#condition#>) {
+//            <#statements#>
+//        }
+    }else if ((ivar.type & DREncodingTypeMask) == DREncodingTypeBlock){
+        
+    }else if ((ivar.type & DREncodingTypeMask) == DREncodingTypeObject){
+        
+    }else{
+        // 类型不支持
+        return;
+    }
+    
+    [instance setValue:value forKeyPath:ivar.ivarName];
+}
+
 
 + (instancetype)modelClass:(Class)cls{
     if (!cls) return nil;

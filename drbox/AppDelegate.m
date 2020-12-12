@@ -8,8 +8,13 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import <objc/runtime.h>
+#import "DRClassInfo.h"
 
-@interface AppDelegate ()
+@interface AppDelegate (){
+    
+    SEL _sel;
+}
 
 
 @end
@@ -26,6 +31,15 @@
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     window.rootViewController = nav;
     [window makeKeyAndVisible];
+    
+    DRClassInfo *info = [DRClassInfo infoWithClass:self.class];
+    for (DRClassIvarInfo *ivar in [info.ivarInfos allValues]) {
+        if ([ivar.name isEqualToString:@"_sel"]) {
+            object_setIvar(self, ivar.ivar, @"aaa:");
+        }
+    }
+    
+    NSLog(@"---:%@", NSStringFromSelector(_sel));
     
     return YES;
 }

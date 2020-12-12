@@ -22,6 +22,10 @@
     return [[[self mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
 }
 
++ (NSString *)dr_displayName{
+    return [[[self mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+}
+
 + (NSArray<NSString *> *)dr_supportedInterfaceOrientations{
     
     return [[[self mainBundle] infoDictionary] objectForKey:@"UISupportedInterfaceOrientations"];
