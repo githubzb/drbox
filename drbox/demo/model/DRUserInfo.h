@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DRModelProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,22 +17,50 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface DRBaseInfo : NSObject{
-    NSInteger _age;
+@interface DRPeople : NSObject<DRModel>{
+    
+    NSString *_firstName;
+    NSString *_secondName;
 }
 
-@property (nonatomic, copy) NSString *name;
+@property (nonatomic, readonly) NSString *name;
+@property (nonatomic, assign) NSInteger age;
+@property (nonatomic, copy) NSDate *birthday;
+
+@end
+
+@interface DRJob : NSObject<DRModel>
+
+@property (nonatomic, copy) NSString *company;
+@property (nonatomic, copy) NSString *address;
+@property (nonatomic, copy) NSString *post;
 
 @end
 
 
-@interface DRUserInfo : DRBaseInfo{
-    
-    NSURL *headerUrl;
+@interface MySelfInfo : DRPeople
+
+@property (nonatomic, strong) DRJob *job;
+@property (nonatomic, copy) NSArray *hobbys;
+@property (nonatomic, copy) NSURL *headerUrl;
+
+@end
+
+@interface DRAuthInfo : NSObject{
+    NSString *_token;
+    NSInteger _deadline;
 }
 
-@property (nonatomic, strong) Car *car;
-@property (nonatomic, copy) NSArray *myCars;
+- (BOOL)isLogin;
+
+@end
+
+
+@interface DRUserInfo : DRAuthInfo<DRModel>
+
+@property (nonatomic, strong) MySelfInfo *myInfo;
+@property (nonatomic, strong) Car *myCar;
+@property (nonatomic, copy) NSDictionary<NSString *, DRPeople *> *familys;
 
 @end
 

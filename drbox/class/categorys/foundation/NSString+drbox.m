@@ -77,7 +77,7 @@
             
             index += range.length;
         }
-        return escaped;
+        return [escaped copy];
     } else {
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -93,6 +93,11 @@
     #pragma clang diagnostic pop
     }
 }
+
+- (NSString *)dr_urlQueryEncodedString{
+    return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+}
+
 - (NSString *)dr_urlDecodedString{
     if ([self respondsToSelector:@selector(stringByRemovingPercentEncoding)]) {
         return [self stringByRemovingPercentEncoding];

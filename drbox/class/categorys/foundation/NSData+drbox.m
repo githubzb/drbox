@@ -36,7 +36,7 @@
     for (int i = 0; i < CC_SHA224_DIGEST_LENGTH; i++) {
         [hash appendFormat:@"%02x", result[i]];
     }
-    return hash;
+    return [hash copy];
 }
 - (NSData *)dr_sha224Data{
     unsigned char result[CC_SHA224_DIGEST_LENGTH];
@@ -51,7 +51,7 @@
     for (int i = 0; i < CC_SHA256_DIGEST_LENGTH; i++) {
         [hash appendFormat:@"%02x", result[i]];
     }
-    return hash;
+    return [hash copy];
 }
 - (NSData *)dr_sha256Data{
     unsigned char result[CC_SHA256_DIGEST_LENGTH];
@@ -66,7 +66,7 @@
     for (int i = 0; i < CC_SHA384_DIGEST_LENGTH; i++) {
         [hash appendFormat:@"%02x", result[i]];
     }
-    return hash;
+    return [hash copy];
 }
 - (NSData *)dr_sha384Data{
     unsigned char result[CC_SHA384_DIGEST_LENGTH];
@@ -81,7 +81,7 @@
     for (int i = 0; i < CC_SHA512_DIGEST_LENGTH; i++) {
         [hash appendFormat:@"%02x", result[i]];
     }
-    return hash;
+    return [hash copy];
 }
 - (NSData *)dr_sha512Data{
     unsigned char result[CC_SHA512_DIGEST_LENGTH];
@@ -206,7 +206,7 @@
     for (int i = 0; i < length; i++, byte++) {
         [result appendFormat:@"%02X", *byte];
     }
-    return result;
+    return [result copy];
 }
 + (NSData *)dr_dataWithHexString:(NSString *)hexString{
     NSString *hexStr = [hexString stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -228,7 +228,7 @@
         [result appendBytes:&bytes length:1];
     }
     free(buf);
-    return result;
+    return [NSData dataWithData:result];
 }
 
 - (id)dr_jsonObj{
@@ -422,7 +422,7 @@
     for (int i = 0; i < size; i++) {
         [hash appendFormat:@"%02x", result[i]];
     }
-    return hash;
+    return [hash copy];
 }
 
 - (NSData *)dr_hmacDataUsingAlg:(CCHmacAlgorithm)alg withKey:(NSString *)key {

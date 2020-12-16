@@ -9,13 +9,13 @@
 #import "DRKVOViewController.h"
 #import "Drbox.h"
 
-@interface DRPeople : NSObject
+@interface DRXPeople : NSObject
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) NSInteger age;
 
 @end
-@implementation DRPeople
+@implementation DRXPeople
 @end
 
 @interface DRKVOViewController (){
@@ -25,7 +25,7 @@
     NSInteger _index;
 }
 
-@property (nonatomic, strong) DRPeople *people;
+@property (nonatomic, strong) DRXPeople *people;
 
 @end
 
@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.people = [[DRPeople alloc] init];
+    self.people = [[DRXPeople alloc] init];
     
     DRKVOBlock(self, @"people.name", ^(NSString *name){
         NSLog(@"名字改变了:%@", name);

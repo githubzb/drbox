@@ -21,6 +21,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (nullable NSNumber *)dr_numberWithString:(NSString *)string;
 
+/**
+ obj转NSNumber对象
+ 
+ @param obj NSString or NSNumber
+ */
++ (nullable NSNumber *)dr_numberWithObj:(id)obj;
+
 @end
 
 NS_ASSUME_NONNULL_END

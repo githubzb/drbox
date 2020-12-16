@@ -12,6 +12,7 @@
 @implementation NSNumber (drbox)
 
 + (NSNumber *)dr_numberWithString:(NSString *)string{
+    if (![string isKindOfClass:[NSString class]]) return nil;
     NSString *str = [[string dr_trim] lowercaseString];
     if (!str || !str.length) {
         return nil;
@@ -78,6 +79,19 @@
     const char *cstring = str.UTF8String;
     if (!cstring) return nil;
     return @(atoll(cstring));
+}
+
++ (NSNumber *)dr_numberWithObj:(id)obj{
+    if ([obj isKindOfClass:[NSString class]]) {
+        return [self dr_numberWithString:obj];
+    }
+    if ([obj isKindOfClass:[NSNumber class]]) {
+        return [obj copy];
+    }
+    if ([obj isKindOfClass:[NSDate class]]) {
+        return @([(NSDate *)obj timeIntervalSince1970]);
+    }
+    return nil;
 }
 
 @end

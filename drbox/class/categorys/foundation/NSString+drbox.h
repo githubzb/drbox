@@ -30,8 +30,21 @@ NS_ASSUME_NONNULL_BEGIN
 /// base64解码
 - (nullable NSString *)dr_base64DecodedString  API_AVAILABLE(ios(7.0));
 
-/// URL编码
+/**
+ URL编码（会对整个字符串编码）
+ 
+ @discussion
+ 例如：https://www.baidu.com/ww/dd/头像.jpg =》https%3A//www.baidu.com/ww/dd/%E5%A4%B4%E5%83%8F.jpg
+ */
 - (NSString *)dr_urlEncodedString;
+/**
+ URL编码（仅对URL query部分编码，或者说对字符 ":" 不做编码）
+ 
+ @discussion
+ 例如：https://www.baidu.com/ww/dd/头像.jpg =》https://www.baidu.com/ww/dd/%E5%A4%B4%E5%83%8F.jpg
+ */
+- (NSString *)dr_urlQueryEncodedString;
+
 /// URL解码
 - (NSString *)dr_urlDecodedString;
 /// 将json字符串转成NSDictionary或NSArray
