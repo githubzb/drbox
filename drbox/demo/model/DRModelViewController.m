@@ -8,7 +8,7 @@
 
 #import "DRModelViewController.h"
 #import "DRUserInfo.h"
-#import "NSObject+DRModel.h"
+#import "Drbox.h"
 
 @interface DRModelViewController (){
     
@@ -42,7 +42,9 @@
             @"son": @{@"full_name": @{@"first": @"zhang", @"second": @"yu"}, @"age": @4, @"birthday": @"2018-08-23"},
             @"girl": @{@"full_name": @{@"first": @"zhang", @"second": @"xia"}, @"age": @3, @"birthday": @"2019-08-23"}
         },
-        @"tokenInfo": @{@"token": @"232de23evefwf232fewfwe", @"deadline": @23243432143}
+        @"tokenInfo": @{@"token": @"232de23evefwf232fewfwe", @"deadline": @23243432143},
+        @"point1": @"{100.23, 232.34}",
+        @"point2": @"{200.23, 100.34}"
     };
     DRUserInfo *info = [DRUserInfo dr_modelWithDictionary:dic];
     NSLog(@"info: %@", info);
@@ -55,6 +57,31 @@
     
     DRUserInfo *info3 = [info2 dr_copy];
     NSLog(@"info3: %@", info3);
+    
+    
+    NSError *error;
+    NSData *data = [NSKeyedArchiver dr_archivedDataWithRootObject:info3 requiringSecureCoding:YES error:&error];
+    if (error) {
+        NSLog(@"----归档失败：%@", error);
+        return;
+    }
+    NSLog(@"%@", [data dr_utf8String]);
+    DRUserInfo *info4 = [NSKeyedUnarchiver dr_unarchivedObjectOfClass:DRUserInfo.class
+                                                             fromData:data
+                                                                error:&error];
+    if (error) {
+        NSLog(@"解档失败：%@", error);
+        return;
+    }
+    NSLog(@"接档数据：%@", info4);
+    
+    NSArray *peopleList = @[
+        @{@"first": @"xia", @"second": @"yu", @"age": @34, @"birthday": @"1971-08-23"},
+        @{@"first": @"xia", @"second": @"yu", @"age": @34, @"birthday": @"1971-08-23"}
+    ];
+    NSArray *peopleModels = [NSArray dr_modelArrayWithClass:DRPeople.class array:peopleList];
+    NSLog(@"peopleModels: %@", peopleModels);
+    
 }
 
 

@@ -11,15 +11,19 @@
 @implementation NSKeyedArchiver (drbox)
 
 + (NSData *)dr_archivedDataWithRootObject:(id)rootObject
+                    requiringSecureCoding:(BOOL)requiringSecureCoding
                                     error:(NSError *__autoreleasing  _Nullable *)error{
     NSData *data = nil;
     if (@available(iOS 11.0, *)) {
         data = [self archivedDataWithRootObject:rootObject
-                          requiringSecureCoding:YES
+                          requiringSecureCoding:requiringSecureCoding
                                           error:error];
     } else {
         @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             data = [self archivedDataWithRootObject:rootObject];
+#pragma clang diagnostic pop
         } @catch (NSException *exception) {
             if (error) {
                 *error = [NSError errorWithDomain:NSCocoaErrorDomain
@@ -33,11 +37,12 @@
 
 + (BOOL)dr_archiveRootObject:(id)rootObject
                       toFile:(NSString *)path
+       requiringSecureCoding:(BOOL)requiringSecureCoding
                        error:(NSError *__autoreleasing  _Nullable *)error{
     BOOL res = NO;
     if (@available(iOS 11.0, *)) {
         NSData *data = [self archivedDataWithRootObject:rootObject
-                                  requiringSecureCoding:YES
+                                  requiringSecureCoding:requiringSecureCoding
                                                   error:error];
         if (data.length) {
             res = [data writeToFile:path
@@ -46,7 +51,10 @@
         }
     } else {
         @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             res = [self archiveRootObject:rootObject toFile:path];
+#pragma clang diagnostic pop
         } @catch (NSException *exception) {
             if (error) {
                 *error = [NSError errorWithDomain:NSCocoaErrorDomain

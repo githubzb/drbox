@@ -16,11 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
  归档类对象（兼容ios11之前的方法调用）
  
  @param rootObject 归档的类对象
+ @param requiringSecureCoding 归档的类是否必须实现NSSecureCoding协议（iOS11.0开始有效）
  @param error 错误指针，用于获取错误信息
  
  @return 归档成功，返回data，反之，return nil
  */
 + (nullable NSData *)dr_archivedDataWithRootObject:(id)rootObject
+                             requiringSecureCoding:(BOOL)requiringSecureCoding
                                              error:(__autoreleasing NSError **)error;
 
 /**
@@ -28,14 +30,17 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param rootObject 归档的类对象
  @param path 保存归档数据的绝对路径
+ @param requiringSecureCoding 归档的类是否必须实现NSSecureCoding协议（iOS11.0开始有效）
  @param error 错误指针，用于获取错误信息
 
  @return YES：成功
 */
 + (BOOL)dr_archiveRootObject:(id)rootObject
                       toFile:(NSString *)path
+       requiringSecureCoding:(BOOL)requiringSecureCoding
                        error:(__autoreleasing NSError **)error;
 
 @end
 
 NS_ASSUME_NONNULL_END
+    

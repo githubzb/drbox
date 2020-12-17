@@ -6,18 +6,18 @@
 //  Copyright © 2020 @zb.drbox. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "DRModelProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Car : NSObject
+@interface Car : NSObject<NSSecureCoding>
 
 @property (nonatomic, copy) NSString *name;
 
 @end
 
-@interface DRPeople : NSObject<DRModel>{
+@interface DRPeople : NSObject<DRModel, NSSecureCoding>{
     
     NSString *_firstName;
     NSString *_secondName;
@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface DRJob : NSObject<DRModel>
+@interface DRJob : NSObject<DRModel, NSSecureCoding>
 
 @property (nonatomic, copy) NSString *company;
 @property (nonatomic, copy) NSString *address;
@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface MySelfInfo : DRPeople
+@interface MySelfInfo : DRPeople<NSSecureCoding>
 
 @property (nonatomic, strong) DRJob *job;
 @property (nonatomic, copy) NSArray *hobbys;
@@ -56,7 +56,11 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface DRUserInfo : DRAuthInfo<DRModel>
+@interface DRUserInfo : DRAuthInfo<DRModel, NSSecureCoding>{
+    
+    CGPoint _point1;
+    CGPoint _point2;
+}
 
 @property (nonatomic, strong) MySelfInfo *myInfo;
 @property (nonatomic, strong) Car *myCar;

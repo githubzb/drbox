@@ -45,20 +45,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// 如果当前对象实现了NSCopying协议，直接采用copy返回，反之遍历成员变量一一赋值
 - (instancetype)dr_copy;
 
-/**
- 返归档
- 
- @param aCoder  An archiver object.
- */
+/// model 归档
 - (void)dr_modelEncodeWithCoder:(NSCoder *)aCoder;
 
-/**
- 归档
- 
- @param aDecoder  An archiver object.
- 
- @return self
- */
+/// model 解档
 - (instancetype)dr_modelInitWithCoder:(NSCoder *)aDecoder;
 
 /// 安全调用，不会crash
@@ -71,5 +61,24 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)dr_valueForKeyPath:(NSString *)keyPath;
 
 @end
+
+
+@interface NSArray (DRModel)
+
++ (nullable NSArray *)dr_modelArrayWithClass:(Class)cls json:(id)json;
+
++ (nullable NSArray *)dr_modelArrayWithClass:(Class)cls array:(NSArray *)arr;
+
+@end
+
+
+@interface NSDictionary (DRModel)
+
++ (nullable NSDictionary *)dr_modelDictionaryWithClass:(Class)cls json:(id)json;
+
++ (nullable NSDictionary *)dr_modelDictionaryWithClass:(Class)cls dictionary:(NSDictionary *)dic;
+
+@end
+
 
 NS_ASSUME_NONNULL_END

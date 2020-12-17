@@ -21,7 +21,10 @@
                                       error:error];
     }else{
         @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             obj = [self unarchiveObjectWithData:data];
+#pragma clang diagnostic pop
         } @catch (NSException *exception) {
             if (error) {
                 *error = [NSError errorWithDomain:NSCocoaErrorDomain
@@ -53,7 +56,10 @@
                                       error:error];
     }else{
         @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             obj = [self unarchiveObjectWithFile:path];
+#pragma clang diagnostic pop
         } @catch (NSException *exception) {
             if (error) {
                 *error = [NSError errorWithDomain:NSCocoaErrorDomain

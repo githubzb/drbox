@@ -9,8 +9,8 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 
-@interface AppDelegate ()
 
+@interface AppDelegate ()
 
 @end
 

@@ -7,12 +7,25 @@
 //
 
 #import "DRUserInfo.h"
+#import "NSObject+DRModel.h"
 
 @implementation Car
 
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"{name: %@}", self.name];
+}
+
+#pragma mark - NSSecureCoding
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
+- (void)encodeWithCoder:(nonnull NSCoder *)coder {
+    [self dr_modelEncodeWithCoder:coder];
+}
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)coder {
+    return [self dr_modelInitWithCoder:coder];
 }
 
 @end
@@ -29,6 +42,18 @@
         @"company": @"job_company",
         @"post": @"job_post"
     };
+}
+
+#pragma mark - NSSecureCoding
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
+- (void)encodeWithCoder:(nonnull NSCoder *)coder {
+    [self dr_modelEncodeWithCoder:coder];
+}
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)coder {
+    return [self dr_modelInitWithCoder:coder];
 }
 
 @end
@@ -63,9 +88,33 @@
     return str;
 }
 
+#pragma mark - NSSecureCoding
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
+- (void)encodeWithCoder:(nonnull NSCoder *)coder {
+    [self dr_modelEncodeWithCoder:coder];
+}
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)coder {
+    return [self dr_modelInitWithCoder:coder];
+}
+
 @end
 
 @implementation MySelfInfo
+
+#pragma mark - NSSecureCoding
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
+- (void)encodeWithCoder:(nonnull NSCoder *)coder {
+    [self dr_modelEncodeWithCoder:coder];
+}
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)coder {
+    return [self dr_modelInitWithCoder:coder];
+}
 
 @end
 
@@ -88,7 +137,9 @@
         @"myInfo": @"userInfo",
         @"myCar": @"car",
         @"_token": @[@"tokenInfo.token", @"token"],
-        @"_deadline": @[@"tokenInfo.deadline", @"deadline"]
+        @"_deadline": @[@"tokenInfo.deadline", @"deadline"],
+        @"_point1": @"point1",
+        @"_point2": @"point2"
     };
 }
 
@@ -99,6 +150,14 @@
         @"_token": @"token",
         @"_deadline": @"deadline"
     };
+}
+
+//+ (NSArray<NSString *> *)modelPropertyOrIvarBlacklist{
+//    return @[@"_myCar"]; // 这里可以写属性名：myCar，也可以写成员变量名：_myCar
+//}
+
++ (NSArray<NSString *> *)modelPropertyOrIvarWhitelist{
+    return @[@"_myInfo", @"_token", @"_deadline", @"familys"];
 }
 
 - (NSString *)description
@@ -117,7 +176,24 @@
     [str appendFormat:@", token: %@", _token];
     [str appendFormat:@", deadline: %ld", _deadline];
     
+    [str appendFormat:@", point1: %@", NSStringFromCGPoint(_point1)];
+    [str appendFormat:@", point2: %@", NSStringFromCGPoint(_point2)];
+    
     return str;
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
+
+- (void)encodeWithCoder:(nonnull NSCoder *)coder {
+    [self dr_modelEncodeWithCoder:coder];
+}
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)coder {
+    return [self dr_modelInitWithCoder:coder];
 }
 
 @end

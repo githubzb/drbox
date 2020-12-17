@@ -197,7 +197,7 @@ static inline DRSemaphoreLock * _DRGlobalLock(){
     if (_customArchiveBlock) {
         value = _customArchiveBlock(object);
     } else {
-        value = [NSKeyedArchiver dr_archivedDataWithRootObject:object error:NULL];
+        value = [NSKeyedArchiver dr_archivedDataWithRootObject:object requiringSecureCoding:NO error:NULL];
     }
     if (!value) return;
     NSString *filename = nil;

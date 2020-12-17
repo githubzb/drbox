@@ -265,6 +265,7 @@
     NSError *error;
     NSData *object = [@"123" dataUsingEncoding:NSUTF8StringEncoding];
     NSData *data = [NSKeyedArchiver dr_archivedDataWithRootObject:object
+                                            requiringSecureCoding:YES
                                                             error:&error];
     if (error) {
         NSLog(@"error:%@", error);

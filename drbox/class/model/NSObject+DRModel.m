@@ -134,6 +134,18 @@ static inline DREncodingNSType DRClassGetNSType(Class cls) {
     self = [super init];
     if (self) {
         _cls = cls;
+        
+        NSArray *blackList = nil;
+        NSArray *whitelist = nil;
+        if ([cls conformsToProtocol:@protocol(DRModel)]) {
+            if ([cls respondsToSelector:@selector(modelPropertyOrIvarBlacklist)]) {
+                blackList = [((id<DRModel>)cls) modelPropertyOrIvarBlacklist];
+            }
+            if ([cls respondsToSelector:@selector(modelPropertyOrIvarWhitelist)]) {
+                whitelist = [((id<DRModel>)cls) modelPropertyOrIvarWhitelist];
+            }
+        }
+        
         DRClassInfo *info = [DRClassInfo infoWithClass:cls];
         NSMutableSet *set = [NSMutableSet setWithCapacity:info.ivarInfos.count];
         while (info) {
@@ -146,6 +158,22 @@ static inline DREncodingNSType DRClassGetNSType(Class cls) {
             
             for (DRClassIvarInfo *ivar in [info.ivarInfos allValues]) {
                 DRClassPropertyInfo *property = propertyMap[ivar.name];
+                if (property) {
+                    if (blackList && ([blackList containsObject:property.name] || [blackList containsObject:ivar.name])) {
+                        continue;
+                    }
+                    if (whitelist && !([whitelist containsObject:property.name] || [whitelist containsObject:ivar.name])) {
+                        continue;
+                    }
+                }else{
+                    if (blackList && [blackList containsObject:ivar.name]) {
+                        continue;
+                    }
+                    if (whitelist && [whitelist containsObject:ivar.name]) {
+                        continue;
+                    }
+                }
+                
                 _DRIvarWrap *iw = [[_DRIvarWrap alloc] initWithIvarInfo:ivar propertyInfo:property];
                 if (iw.ivarName) [set addObject:iw];
             }
@@ -1309,13 +1337,281 @@ static inline id DRModelToJSONObjectRecursive(NSObject *model) {
 
 - (void)dr_modelEncodeWithCoder:(NSCoder *)aCoder{
     if (!aCoder) return;
-    if (self == (id)kCFNull) {
+    if (self == (id)kCFNull) return;
+    if (DRClassGetNSType(self.class) != DREncodingNSTypeNSUnknown) {
         [((id<NSCoding>)self)encodeWithCoder:aCoder];
         return;
     }
+    _DRModelWrap *model = [_DRModelWrap modelClass:self.class];
+    [model.ivars enumerateObjectsUsingBlock:^(_DRIvarWrap * _Nonnull ivar, BOOL * _Nonnull stop) {
+        NSString *key = ivar.propertyName ?: ivar.ivarName;
+        id value = DRGetClassInstanceIvarValue(self, ivar);
+        if (DREncodingTypeIsCNumber(ivar.type)) {
+            if (value) {
+                [aCoder encodeObject:value forKey:key];
+            }
+        }else if (ivar.nsType){
+            
+            __block BOOL canEncode = YES;
+            switch (ivar.nsType) {
+                case DREncodingNSTypeNSArray:
+                case DREncodingNSTypeNSMutableArray: {
+                    for (id one in (NSArray *)value) {
+                        if (![one respondsToSelector:@selector(encodeWithCoder:)]) {
+                            canEncode = NO;
+                            break;
+                        }
+                    }
+                }
+                    break;
+                case DREncodingNSTypeNSDictionary:
+                case DREncodingNSTypeNSMutableDictionary: {
+                    [(NSDictionary *)value enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                        if (![key isKindOfClass:[NSString class]] ||
+                            ![obj respondsToSelector:@selector(encodeWithCoder:)]) {
+                            canEncode = NO;
+                            *stop = YES;
+                        }
+                    }];
+                }
+                    break;
+                case DREncodingNSTypeNSSet:
+                case DREncodingNSTypeNSMutableSet: {
+                    [(NSSet *)value enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+                        if (![obj respondsToSelector:@selector(encodeWithCoder:)]) {
+                            canEncode = NO;
+                            *stop = YES;
+                        }
+                    }];
+                }
+                    break;
+                default: {
+                    canEncode = [value respondsToSelector:@selector(encodeWithCoder:)];
+                }
+                    break;
+            }
+            if (canEncode) {
+                [aCoder encodeObject:value forKey:key];
+            }
+        }else {
+            switch (ivar.type & DREncodingTypeMask) {
+                case DREncodingTypeObject: {
+                    if ([value respondsToSelector:@selector(encodeWithCoder:)]) {
+                        [aCoder encodeObject:value forKey:key];
+                    }
+                }
+                    break;
+                case DREncodingTypeSEL: {
+                    [aCoder encodeObject:value forKey:key];
+                }
+                    break;
+                case DREncodingTypeClass: {
+                    [aCoder encodeObject:value forKey:key];
+                }
+                    break;
+                case DREncodingTypeStruct: {
+                    if ([ivar.typeString hasPrefix:kTypeCGRectPrefix] ||
+                        [ivar.typeString hasPrefix:kTypeCGPointPrefix] ||
+                        [ivar.typeString hasPrefix:kTypeCGSizePrefix] ||
+                        [ivar.typeString hasPrefix:kTypeUIOffsetPrefix] ||
+                        [ivar.typeString hasPrefix:kTypeUIEdgeInsetsPrefix] ||
+                        [ivar.typeString hasPrefix:kTypeCGAffineTransformPrefix]) {
+                        [aCoder encodeObject:value forKey:key];
+                    }
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }];
 }
 
 - (instancetype)dr_modelInitWithCoder:(NSCoder *)aDecoder{
+    if (!aDecoder) return self;
+    if (self == (id)kCFNull) return self;
+    if (DRClassGetNSType(self.class) != DREncodingNSTypeNSUnknown) return self;
+    _DRModelWrap *model = [_DRModelWrap modelClass:self.class];
+    [model.ivars enumerateObjectsUsingBlock:^(_DRIvarWrap * _Nonnull ivar, BOOL * _Nonnull stop) {
+        NSString *key = ivar.propertyName ?: ivar.ivarName;
+        id value = nil;
+        if ([aDecoder containsValueForKey:key]) {
+            NSMutableSet *set = [NSMutableSet set];
+            if (ivar.cls) {
+                [set addObject:ivar.cls];
+            }
+            if (ivar.innerCls) {
+                [set addObject:ivar.innerCls];
+            }
+            if (set.count) {
+                value = [aDecoder decodeObjectOfClasses:set forKey:key];
+            }else{
+                value = [aDecoder decodeObjectForKey:key];
+            }
+        }
+        if (!value) return;
+        if (DREncodingTypeIsCNumber(ivar.type)) {
+            if ([value isKindOfClass:[NSNumber class]]) {
+                NSNumber *num = value;
+                if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                    switch (ivar.type & DREncodingTypeMask) {
+                        case DREncodingTypeBool: {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, bool, num.boolValue);
+                        } break;
+                        case DREncodingTypeInt8: {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, int8_t, (int8_t)num.charValue);
+                        } break;
+                        case DREncodingTypeUInt8: {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, uint8_t, (uint8_t)num.unsignedCharValue);
+                        } break;
+                        case DREncodingTypeInt16: {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, int16_t, (int16_t)num.shortValue);
+                        } break;
+                        case DREncodingTypeUInt16: {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, uint16_t, (uint16_t)num.unsignedShortValue);
+                        } break;
+                        case DREncodingTypeInt32: {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, int32_t, (int32_t)num.intValue);
+                        }
+                        case DREncodingTypeUInt32: {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, uint32_t, (uint32_t)num.unsignedIntValue);
+                        } break;
+                        case DREncodingTypeInt64: {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, uint64_t, (uint64_t)num.longLongValue);
+                        } break;
+                        case DREncodingTypeUInt64: {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, uint64_t, (uint64_t)num.unsignedLongLongValue);
+                        } break;
+                        case DREncodingTypeFloat: {
+                            float f = num.floatValue;
+                            if (isnan(f) || isinf(f)) f = 0;
+                            DR_SET_IVAR_VALUE(self, ivar.setter, float, f);
+                        } break;
+                        case DREncodingTypeDouble: {
+                            double d = num.doubleValue;
+                            if (isnan(d) || isinf(d)) d = 0;
+                            DR_SET_IVAR_VALUE(self, ivar.setter, double, d);
+                        } break;
+                        case DREncodingTypeLongDouble: {
+                            long double d = num.doubleValue;
+                            if (isnan(d) || isinf(d)) d = 0;
+                            DR_SET_IVAR_VALUE(self, ivar.setter, long double, (long double)d);
+                        } break;
+                        default:{
+                            [self dr_setValue:num forKey:ivar.ivarName];
+                        }
+                            break;
+                    }
+                }else{
+                    [self dr_setValue:num forKey:ivar.ivarName];
+                }
+            }
+        }else{
+            switch (ivar.type & DREncodingTypeMask) {
+                case DREncodingTypeObject: {
+                    if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                        DR_SET_IVAR_VALUE(self, ivar.setter, id, value);
+                    }else{
+                        [self dr_setValue:value forKey:ivar.ivarName];
+                    }
+                }
+                    break;
+                case DREncodingTypeSEL: {
+                    if ([value isKindOfClass:[NSString class]]) {
+                        if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, SEL, NSSelectorFromString(value));
+                        }
+                    }
+                }
+                    break;
+                case DREncodingTypeClass: {
+                    if ([value isKindOfClass:[NSString class]]) {
+                        if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                            DR_SET_IVAR_VALUE(self, ivar.setter, Class, NSClassFromString(value));
+                        }else{
+                            [self dr_setValue:NSClassFromString(value) forKey:ivar.ivarName];
+                        }
+                    }
+                }
+                    break;
+                case DREncodingTypeStruct: {
+                    if ([value isKindOfClass:[NSString class]]) {
+                        if ([ivar.typeString hasPrefix:kTypeCGRectPrefix]) {
+                            CGRect rect = CGRectFromString(value);
+                            if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                                DR_SET_IVAR_VALUE(self, ivar.setter, CGRect, rect);
+                            }else{
+                                NSValue *val = [NSValue valueWithCGRect:rect];
+                                [self dr_setValue:val forKey:ivar.ivarName];
+                            }
+                        }else if ([ivar.typeString hasPrefix:kTypeCGPointPrefix]){
+                            CGPoint point = CGPointFromString(value);
+                            if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                                DR_SET_IVAR_VALUE(self, ivar.setter, CGPoint, point);
+                            }else{
+                                NSValue *val = [NSValue valueWithCGPoint:point];
+                                [self dr_setValue:val forKey:ivar.ivarName];
+                            }
+                        }else if ([ivar.typeString hasPrefix:kTypeCGSizePrefix]){
+                            CGSize size = CGSizeFromString(value);
+                            if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                                DR_SET_IVAR_VALUE(self, ivar.setter, CGSize, size);
+                            }else{
+                                NSValue *val = [NSValue valueWithCGSize:size];
+                                [self dr_setValue:val forKey:ivar.ivarName];
+                            }
+                        }else if ([ivar.typeString hasPrefix:kTypeUIOffsetPrefix]){
+                            UIOffset offset = UIOffsetFromString(value);
+                            if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                                DR_SET_IVAR_VALUE(self, ivar.setter, UIOffset, offset);
+                            }else{
+                                NSValue *val = [NSValue valueWithUIOffset:offset];
+                                [self dr_setValue:val forKey:ivar.ivarName];
+                            }
+                        }else if ([ivar.typeString hasPrefix:kTypeUIEdgeInsetsPrefix]){
+                            UIEdgeInsets insets = UIEdgeInsetsFromString(value);
+                            if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                                DR_SET_IVAR_VALUE(self, ivar.setter, UIEdgeInsets, insets);
+                            }else{
+                                NSValue *val = [NSValue valueWithUIEdgeInsets:insets];
+                                [self dr_setValue:val forKey:ivar.ivarName];
+                            }
+                        }else if ([ivar.typeString hasPrefix:kTypeCGAffineTransformPrefix]){
+                            CGAffineTransform affine = CGAffineTransformFromString(value);
+                            if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                                DR_SET_IVAR_VALUE(self, ivar.setter, CGAffineTransform, affine);
+                            }else{
+                                NSValue *val = [NSValue valueWithCGAffineTransform:affine];
+                                [self dr_setValue:val forKey:ivar.ivarName];
+                            }
+                        }
+                    }else if ([value isKindOfClass:[NSValue class]]){
+                        if (ivar.setter && [self respondsToSelector:ivar.setter]) {
+                            NSValue *val = value;
+                            if ([ivar.typeString hasPrefix:kTypeCGRectPrefix]) {
+                                DR_SET_IVAR_VALUE(self, ivar.setter, CGRect, val.CGRectValue);
+                            }else if ([ivar.typeString hasPrefix:kTypeCGPointPrefix]){
+                                DR_SET_IVAR_VALUE(self, ivar.setter, CGPoint, val.CGPointValue);
+                            }else if ([ivar.typeString hasPrefix:kTypeCGSizePrefix]){
+                                DR_SET_IVAR_VALUE(self, ivar.setter, CGSize, val.CGSizeValue);
+                            }else if ([ivar.typeString hasPrefix:kTypeUIOffsetPrefix]){
+                                DR_SET_IVAR_VALUE(self, ivar.setter, UIOffset, val.UIOffsetValue);
+                            }else if ([ivar.typeString hasPrefix:kTypeUIEdgeInsetsPrefix]){
+                                DR_SET_IVAR_VALUE(self, ivar.setter, UIEdgeInsets, val.UIEdgeInsetsValue);
+                            }else if ([ivar.typeString hasPrefix:kTypeCGAffineTransformPrefix]){
+                                DR_SET_IVAR_VALUE(self, ivar.setter, CGAffineTransform, val.CGAffineTransformValue);
+                            }
+                        }else{
+                            [self dr_setValue:value forKey:ivar.ivarName];
+                        }
+                    }
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }];
     return self;
 }
 
@@ -1353,6 +1649,66 @@ static inline id DRModelToJSONObjectRecursive(NSObject *model) {
         value = [self valueForKeyPath:keyPath];
     } @catch (NSException *exception) {}
     return value;
+}
+
+@end
+
+
+@implementation NSArray (DRModel)
+
++ (NSArray *)dr_modelArrayWithClass:(Class)cls json:(id)json{
+    if (!cls || !json) return nil;
+    NSArray *arr = nil;
+    if ([json isKindOfClass:[NSArray class]]) {
+        arr = json;
+    } else if ([json isKindOfClass:[NSString class]]) {
+        arr = [(NSString *)json dr_jsonObj];
+    } else if ([json isKindOfClass:[NSData class]]) {
+        arr = [(NSData *)json dr_jsonObj];
+    }
+    if (![arr isKindOfClass:[NSArray class]]) return nil;
+    return [self dr_modelArrayWithClass:cls array:arr];
+}
+
++ (NSArray *)dr_modelArrayWithClass:(Class)cls array:(NSArray *)arr{
+    if (!cls || !arr || ![arr isKindOfClass:[NSArray class]]) return nil;
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:arr.count];
+    for (NSDictionary *dic in arr) {
+        if (![dic isKindOfClass:[NSDictionary class]]) continue;
+        NSObject *obj = [cls dr_modelWithDictionary:dic];
+        if (obj) [result addObject:obj];
+    }
+    return [result copy];
+}
+
+@end
+
+
+@implementation NSDictionary (DRModel)
+
++ (NSDictionary *)dr_modelDictionaryWithClass:(Class)cls json:(id)json{
+    if (!cls || !json) return nil;
+    NSDictionary *dic = nil;
+    if ([json isKindOfClass:[NSDictionary class]]) {
+        dic = json;
+    } else if ([json isKindOfClass:[NSString class]]) {
+        dic = [(NSString *)json dr_jsonObj];
+    } else if ([json isKindOfClass:[NSData class]]) {
+        dic = [(NSData *)json dr_jsonObj];
+    }
+    if (![dic isKindOfClass:[NSDictionary class]]) return nil;
+    return [self dr_modelDictionaryWithClass:cls dictionary:dic];
+}
+
++ (NSDictionary *)dr_modelDictionaryWithClass:(Class)cls dictionary:(NSDictionary *)dic{
+    if (!cls || !dic || ![dic isKindOfClass:[NSDictionary class]]) return nil;
+    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:dic.count];
+    for (NSString *key in dic.allKeys) {
+        if (![key isKindOfClass:[NSString class]]) continue;
+        NSObject *obj = [cls dr_modelWithDictionary:dic[key]];
+        if (obj) result[key] = obj;
+    }
+    return [result copy];
 }
 
 @end

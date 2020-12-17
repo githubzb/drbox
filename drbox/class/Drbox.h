@@ -56,6 +56,7 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 
 // model
 #import <drbox/DRClassInfo.h>
+#import <drbox/NSObject+DRModel.h>
 
 // layout
 #import <drbox/UIView+DRLayout.h>
@@ -111,6 +112,7 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 
 // model
 #import "DRClassInfo.h"
+#import "NSObject+DRModel.h"
 
 // layout
 #import "UIView+DRLayout.h"

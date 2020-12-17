@@ -37,6 +37,21 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (nullable NSDictionary<NSString *, id> *)toModelKeyMapper;
 
+/**
+ model属性或成员白名单（白名单中的属性或成员才可以被映射）
+ 
+ @return model.propertys or model.ivars（property 和 ivar其中一个即可）
+ */
++ (nullable NSArray<NSString *> *)modelPropertyOrIvarWhitelist;
+
+/**
+ model属性或成员黑名单（黑名单中的属性或成员不可以被映射）
+ 
+ @return model.propertys or model.ivars（property 和 ivar其中一个即可）
+ */
++ (nullable NSArray<NSString *> *)modelPropertyOrIvarBlacklist;
+
+
 #pragma mark - 类型转换
 
 /**
