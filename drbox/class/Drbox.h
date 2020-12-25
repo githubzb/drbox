@@ -37,6 +37,7 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 #import <drbox/UITextField+drbox.h>
 #import <drbox/UIDevice+drbox.h>
 #import <drbox/UITableView+drbox.h>
+#import <drbox/CADisplayLink+drbox.h>
 
 // tools
 #import <drbox/DRDictionaryParser.h>
@@ -92,6 +93,7 @@ FOUNDATION_EXPORT const unsigned char drboxVersionString[];
 #import "UITextField+drbox.h"
 #import "UIDevice+drbox.h"
 #import "UITableView+drbox.h"
+#import "CADisplayLink+drbox.h"
 
 // tools
 #import "DRDictionaryParser.h"

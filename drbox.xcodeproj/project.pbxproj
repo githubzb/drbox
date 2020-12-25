@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		103045CBB2DBCAE25BC4BE58 /* Pods_drbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B802BEDCB65C983D8FE7864 /* Pods_drbox.framework */; };
+		1B1F68DB2590328F0097EBDA /* DRNavigationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F68DA2590328F0097EBDA /* DRNavigationTool.m */; };
+		1B1F691F2591D1440097EBDA /* CADisplayLink+drbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F691E2591D1440097EBDA /* CADisplayLink+drbox.m */; };
+		1B1F69242591D2BB0097EBDA /* DRWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F69232591D2BB0097EBDA /* DRWeakProxy.m */; };
+		1B1F69282591DB610097EBDA /* DRTimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F69272591DB610097EBDA /* DRTimerViewController.m */; };
+		1B1F692C2591E8590097EBDA /* DRDisplayLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F692B2591E8590097EBDA /* DRDisplayLinkViewController.m */; };
 		1B1FFABE257B294500CA7237 /* NSObject+DRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFABD257B294500CA7237 /* NSObject+DRModel.m */; };
 		1B1FFAC3257B2A7C00CA7237 /* DRModelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFAC2257B2A7C00CA7237 /* DRModelViewController.m */; };
 		1B1FFAC8257B2B0A00CA7237 /* DRUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFAC7257B2B0A00CA7237 /* DRUserInfo.m */; };
@@ -100,6 +105,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B1F68D92590328F0097EBDA /* DRNavigationTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRNavigationTool.h; sourceTree = "<group>"; };
+		1B1F68DA2590328F0097EBDA /* DRNavigationTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRNavigationTool.m; sourceTree = "<group>"; };
+		1B1F691D2591D1440097EBDA /* CADisplayLink+drbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CADisplayLink+drbox.h"; sourceTree = "<group>"; };
+		1B1F691E2591D1440097EBDA /* CADisplayLink+drbox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CADisplayLink+drbox.m"; sourceTree = "<group>"; };
+		1B1F69222591D2BB0097EBDA /* DRWeakProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRWeakProxy.h; sourceTree = "<group>"; };
+		1B1F69232591D2BB0097EBDA /* DRWeakProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRWeakProxy.m; sourceTree = "<group>"; };
+		1B1F69262591DB610097EBDA /* DRTimerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRTimerViewController.h; sourceTree = "<group>"; };
+		1B1F69272591DB610097EBDA /* DRTimerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRTimerViewController.m; sourceTree = "<group>"; };
+		1B1F692A2591E8590097EBDA /* DRDisplayLinkViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRDisplayLinkViewController.h; sourceTree = "<group>"; };
+		1B1F692B2591E8590097EBDA /* DRDisplayLinkViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRDisplayLinkViewController.m; sourceTree = "<group>"; };
 		1B1FFABC257B294500CA7237 /* NSObject+DRModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+DRModel.h"; sourceTree = "<group>"; };
 		1B1FFABD257B294500CA7237 /* NSObject+DRModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DRModel.m"; sourceTree = "<group>"; };
 		1B1FFAC1257B2A7C00CA7237 /* DRModelViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRModelViewController.h; sourceTree = "<group>"; };
@@ -294,6 +309,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B1F68D8259031F80097EBDA /* router */ = {
+			isa = PBXGroup;
+			children = (
+				1B1F68D92590328F0097EBDA /* DRNavigationTool.h */,
+				1B1F68DA2590328F0097EBDA /* DRNavigationTool.m */,
+			);
+			path = router;
+			sourceTree = "<group>";
+		};
+		1B1F691C2591D1190097EBDA /* quartzCore */ = {
+			isa = PBXGroup;
+			children = (
+				1B1F691D2591D1440097EBDA /* CADisplayLink+drbox.h */,
+				1B1F691E2591D1440097EBDA /* CADisplayLink+drbox.m */,
+			);
+			path = quartzCore;
+			sourceTree = "<group>";
+		};
 		1B1FFAC0257B2A6100CA7237 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				6D1EB22824BDA08600DF8952 /* Drbox.h */,
+				1B1F68D8259031F80097EBDA /* router */,
 				6DE15D56257A7BFF00325B48 /* model */,
 				6D60BB9B256114B00085B1F0 /* kvo */,
 				6DD0F6A3251988FC00FEC788 /* CaptureDevice */,
@@ -384,6 +418,7 @@
 		6D1EB22724BDA00400DF8952 /* categorys */ = {
 			isa = PBXGroup;
 			children = (
+				1B1F691C2591D1190097EBDA /* quartzCore */,
 				6DE0316D24E7704400266235 /* uikit */,
 				6DE9CB0A24C0366A006C869B /* foundation */,
 			);
@@ -427,6 +462,10 @@
 				6DE62BBD2512F11700FAC110 /* DRKeyChainsViewController.m */,
 				6D7FFB28254E937200CA90F0 /* DRTestViewController.h */,
 				6D7FFB29254E937200CA90F0 /* DRTestViewController.m */,
+				1B1F69262591DB610097EBDA /* DRTimerViewController.h */,
+				1B1F69272591DB610097EBDA /* DRTimerViewController.m */,
+				1B1F692A2591E8590097EBDA /* DRDisplayLinkViewController.h */,
+				1B1F692B2591E8590097EBDA /* DRDisplayLinkViewController.m */,
 			);
 			path = demo;
 			sourceTree = "<group>";
@@ -507,6 +546,8 @@
 				6DD3E6B425009E8600718C80 /* DRBlockDescription.m */,
 				6D566B8B2557F3F2005DBFD2 /* DRSandboxTool.h */,
 				6D566B8C2557F3F2005DBFD2 /* DRSandboxTool.m */,
+				1B1F69222591D2BB0097EBDA /* DRWeakProxy.h */,
+				1B1F69232591D2BB0097EBDA /* DRWeakProxy.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -850,6 +891,7 @@
 				6DE5E95B24EFDEC2002D2A71 /* DRURLRequestOperation.m in Sources */,
 				6DE0317A24E79EF300266235 /* DRImageViewController.m in Sources */,
 				6DD0F6A62519892000FEC788 /* DRCaptureDevice.m in Sources */,
+				1B1F69242591D2BB0097EBDA /* DRWeakProxy.m in Sources */,
 				1B1FFABE257B294500CA7237 /* NSObject+DRModel.m in Sources */,
 				6D1CB85924E623F90005E651 /* NSTimer+drbox.m in Sources */,
 				6DF4348D24CA8B320006A7C1 /* DRXMLParserViewController.m in Sources */,
@@ -876,6 +918,7 @@
 				6D1EB22E24BDB09D00DF8952 /* DrboxMacroViewController.m in Sources */,
 				6D1F1C6324FDE62200C9134A /* DRGestureViewController.m in Sources */,
 				6D00596624D7ACD100C6B56C /* DRTableView.m in Sources */,
+				1B1F68DB2590328F0097EBDA /* DRNavigationTool.m in Sources */,
 				6DDAF60824C9838C005575A0 /* DRDictionaryParser.m in Sources */,
 				6D36F2F124DEA0C1002B7741 /* DRKVStorage.mm in Sources */,
 				6D1F1C6624FDF13A00C9134A /* UITextField+drbox.m in Sources */,
@@ -889,9 +932,11 @@
 				6DE62BBE2512F11700FAC110 /* DRKeyChainsViewController.m in Sources */,
 				6D1F1C6924FDF29000C9134A /* DRTextFieldViewController.m in Sources */,
 				6D0DA8F524F20E250040D629 /* DRSecurityPolicy.m in Sources */,
+				1B1F692C2591E8590097EBDA /* DRDisplayLinkViewController.m in Sources */,
 				6D00596924D7CBD000C6B56C /* DRTableViewController.m in Sources */,
 				6D50176A24D6569E008D0FCF /* DRAsyncLayoutViewController.m in Sources */,
 				6DEB00EC2504EAE6007CBC1B /* UITextView+drbox.m in Sources */,
+				1B1F691F2591D1440097EBDA /* CADisplayLink+drbox.m in Sources */,
 				6D519EF624C53A4A0029C4BB /* NSData+drbox.m in Sources */,
 				6D5D6B6024DF93CA00BC7703 /* DRCacheViewController.mm in Sources */,
 				6D26045824FF2ECD00BB0D95 /* DRDelegateProxy.m in Sources */,
@@ -904,6 +949,7 @@
 				6D519EFC24C592DA0029C4BB /* NSString+drbox.m in Sources */,
 				6DE2896B24E92E7200D3D103 /* DRImageDrawDemo.m in Sources */,
 				6D1EB22024BD9D8E00DF8952 /* main.m in Sources */,
+				1B1F69282591DB610097EBDA /* DRTimerViewController.m in Sources */,
 				6DE8A9342515C37900E25E95 /* NSBundle+drbox.m in Sources */,
 				6DEAD7022505E174005EEE87 /* UIScrollView+drbox.m in Sources */,
 				6D65544A24C6E87E00A16879 /* NSDictionary+drbox.m in Sources */,

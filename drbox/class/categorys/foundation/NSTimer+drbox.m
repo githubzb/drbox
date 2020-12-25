@@ -9,44 +9,7 @@
 #import "NSTimer+drbox.h"
 #import "NSObject+drbox.h"
 #import "DRDeallocHook.h"
-
-static const int dr_timer_key;
-
-@interface _DRWeakProxy : NSProxy
-
-@property (nonatomic, weak) id target;
-
-+ (instancetype)weakProxyForObject:(id)targetObject;
-
-@end
-
-@implementation _DRWeakProxy
-
-+ (instancetype)weakProxyForObject:(id)targetObject{
-    if (!targetObject) return nil;
-    _DRWeakProxy *proxy = [_DRWeakProxy alloc];
-    proxy.target = targetObject;
-    return proxy;
-}
-
-
-#pragma mark - Forwarding Messages
-
-- (id)forwardingTargetForSelector:(SEL)selector {
-    return _target;
-}
-
-- (void)forwardInvocation:(NSInvocation *)invocation {
-    // 当target==nil的时候，return 0/NULL/nil.
-    void *nullPointer = NULL;
-    [invocation setReturnValue:&nullPointer];
-}
-
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
-    return [NSObject instanceMethodSignatureForSelector:@selector(init)];
-}
-
-@end
+#import "DRWeakProxy.h"
 
 @implementation NSTimer (drbox)
 
@@ -56,17 +19,35 @@ static const int dr_timer_key;
                                       userInfo:(id)userInfo
                                        repeats:(BOOL)yesOrNo{
     if (!aTarget) return nil;
-    NSTimer *timer = [aTarget dr_associateValueForKey:&dr_timer_key];
+    NSTimer *timer = [self _dr_getTimerForTarget:aTarget];
     if (timer) {
         [timer invalidate];
     }
-    _DRWeakProxy *weakProxy = [_DRWeakProxy weakProxyForObject:aTarget];
+    DRWeakProxy *weakProxy = [DRWeakProxy weakProxyForObject:aTarget];
     timer = [NSTimer scheduledTimerWithTimeInterval:ti
                                              target:weakProxy
                                            selector:aSelector
                                            userInfo:userInfo
                                             repeats:yesOrNo];
-    [aTarget dr_setAssociateStrongValue:timer key:&dr_timer_key];
+    [self _dr_setTimer:timer forTarget:aTarget];
+    [DRDeallocHook addDeallocHookToObject:aTarget
+                                 observer:timer
+                         observerSelector:@selector(invalidate)];
+    return timer;
+}
+
++ (NSTimer *)dr_scheduledNewTimerWithTimeInterval:(NSTimeInterval)ti
+                                           target:(id)aTarget
+                                         selector:(SEL)aSelector
+                                         userInfo:(id)userInfo
+                                          repeats:(BOOL)yesOrNo{
+    if (!aTarget) return nil;
+    DRWeakProxy *weakProxy = [DRWeakProxy weakProxyForObject:aTarget];
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:ti
+                                                      target:weakProxy
+                                                    selector:aSelector
+                                                    userInfo:userInfo
+                                                     repeats:yesOrNo];
     [DRDeallocHook addDeallocHookToObject:aTarget
                                  observer:timer
                          observerSelector:@selector(invalidate)];
@@ -79,17 +60,35 @@ static const int dr_timer_key;
                              userInfo:(id)userInfo
                               repeats:(BOOL)yesOrNo{
     if (!aTarget) return nil;
-    NSTimer *timer = [aTarget dr_associateValueForKey:&dr_timer_key];
+    NSTimer *timer = [self _dr_getTimerForTarget:aTarget];
     if (timer) {
         [timer invalidate];
     }
-    _DRWeakProxy *weakProxy = [_DRWeakProxy weakProxyForObject:aTarget];
+    DRWeakProxy *weakProxy = [DRWeakProxy weakProxyForObject:aTarget];
     timer = [NSTimer timerWithTimeInterval:ti
                                     target:weakProxy
                                   selector:aSelector
                                   userInfo:userInfo
                                    repeats:yesOrNo];
-    [aTarget dr_setAssociateStrongValue:timer key:&dr_timer_key];
+    [self _dr_setTimer:timer forTarget:aTarget];
+    [DRDeallocHook addDeallocHookToObject:aTarget
+                                 observer:timer
+                         observerSelector:@selector(invalidate)];
+    return timer;
+}
+
++ (NSTimer *)dr_timerNewWithTimeInterval:(NSTimeInterval)ti
+                                  target:(id)aTarget
+                                selector:(SEL)aSelector
+                                userInfo:(id)userInfo
+                                 repeats:(BOOL)yesOrNo{
+    if (!aTarget) return nil;
+    DRWeakProxy *weakProxy = [DRWeakProxy weakProxyForObject:aTarget];
+    NSTimer *timer = [NSTimer timerWithTimeInterval:ti
+                                             target:weakProxy
+                                           selector:aSelector
+                                           userInfo:userInfo
+                                            repeats:yesOrNo];
     [DRDeallocHook addDeallocHookToObject:aTarget
                                  observer:timer
                          observerSelector:@selector(invalidate)];
@@ -124,6 +123,13 @@ static const int dr_timer_key;
         void (^block)(NSTimer *timer) = (void (^)(NSTimer *timer))[timer userInfo];
         block(timer);
     }
+}
++ (NSTimer *)_dr_getTimerForTarget:(id)target{
+    if (!target) return nil;
+    return [target dr_associateValueForKey:@selector(_dr_getTimerForTarget:)];
+}
++ (void)_dr_setTimer:(NSTimer *)timer forTarget:(id)target{
+    [target dr_setAssociateStrongValue:timer key:@selector(_dr_getTimerForTarget:)];
 }
 
 @end

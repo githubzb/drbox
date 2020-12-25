@@ -54,6 +54,16 @@
     
     dispatch_after_on_main_queue(10, ^{
         NSLog(@"开始重新布局");
+        
+        // 新增视图
+        UIView *v = [self createViewBackground:[UIColor redColor]];
+        [self.scrollView.dr_contentView addSubview:v];
+        [v dr_makeLayoutWithBlock:^(DRLayout * _Nonnull layout) {
+            layout.margin = DRPointValue(15);
+            layout.height = DRPointValue(50);
+            layout.flexDirection = YGFlexDirectionRow;
+        }];
+        
         [self.scrollView dr_setNeedsLayout];
     });
 }
