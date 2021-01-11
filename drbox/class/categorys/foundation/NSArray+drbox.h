@@ -37,6 +37,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// 将数组转成json格式的字符串（格式化后的）
 - (nullable NSString *)dr_jsonPrettyString;
 
+/// 数组的过滤方法，返回数组中包含block返回YES的元素
+- (NSArray<ObjectType> *)dr_filter:(BOOL(^)(ObjectType obj, NSUInteger index))block;
+/// 通过指定函数处理数组的每个元素，并返回处理后的数组。
+- (NSArray<ObjectType> *)dr_map:(_Nullable id(^)(ObjectType obj, NSUInteger index))block;
+/// 返回通过测试（函数内判断）的数组的第一个元素的值。
+- (nullable ObjectType)dr_find:(BOOL(^)(ObjectType obj, NSUInteger index))block;
+/// 返回传入一个测试条件（函数）符合条件的数组第一个元素位置，没有符合的元素，返回NSNotFound。
+- (NSUInteger)dr_findIndex:(BOOL(^)(ObjectType obj, NSUInteger index))block;
 
 @end
 

@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSDictionary (drbox)
+@interface NSDictionary<__covariant KeyType, __covariant ObjectType> (drbox)
 
 /**
  将plist文件数据转成dictionary对象
@@ -28,9 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)dr_plistString;
 
 /// 获取排序好的key数组，采用caseInsensitiveCompare:排序
-- (NSArray *)dr_allKeysSorted;
+- (NSArray<KeyType> *)dr_allKeysSorted;
 /// 获取所有的value数组，其顺序是key排序后的顺序
-- (NSArray *)dr_allValuesSortedByKeys;
+- (NSArray<ObjectType> *)dr_allValuesSortedByKeys;
 /// 判断字典中是否存在key
 - (BOOL)dr_containsObjectForKey:(id)key;
 
@@ -38,6 +38,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)dr_jsonString;
 /// 将字典转成json格式的字符串（格式化后的）
 - (nullable NSString *)dr_jsonPrettyString;
+
+/// 过滤字典元素，返回字典中包含block返回YES的元素
+- (NSDictionary *)dr_filter:(BOOL(^)(KeyType key, ObjectType value))block;
+/// 通过指定函数处理字典的每个元素，并返回处理后的字典。
+- (NSDictionary *)dr_map:(NSDictionary * _Nullable(^)(KeyType key, ObjectType value))block;
+/// 返回通过测试（函数内判断）的字典的第一个元素的值。
+- (nullable NSDictionary *)dr_find:(BOOL(^)(KeyType key, ObjectType value))block;
 
 /**
  将xml数据转成dictionary对象

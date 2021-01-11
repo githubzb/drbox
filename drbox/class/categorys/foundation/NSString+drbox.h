@@ -30,6 +30,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// base64解码
 - (nullable NSString *)dr_base64DecodedString  API_AVAILABLE(ios(7.0));
 
+- (nullable NSURL *)dr_URL;
+/// 返回URL参数
+- (NSDictionary<NSString *, NSString *> *)dr_parameters;
+/// 返回URL参数（value为URLDecoding之后的值）
+- (NSDictionary<NSString *, NSString *> *)dr_parametersForURLDecoding;
 /**
  URL编码（会对整个字符串编码）
  

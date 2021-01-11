@@ -77,6 +77,44 @@
     return nil;
 }
 
+- (NSDictionary *)dr_filter:(BOOL (^)(id _Nonnull, id _Nonnull))block{
+    NSParameterAssert(block);
+    if (!block) return @{};
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [self enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if (block(key, obj)) {
+            [dic setValue:obj forKey:key];
+        }
+    }];
+    return [dic copy];
+}
+
+- (NSDictionary *)dr_map:(NSDictionary * _Nullable (^)(id _Nonnull, id _Nonnull))block{
+    NSParameterAssert(block);
+    if (!block) return @{};
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [self enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSDictionary *_dic = block(key, obj);
+        if ([_dic isKindOfClass:[NSDictionary class]]) {
+            [dic addEntriesFromDictionary:_dic];
+        }
+    }];
+    return [dic copy];
+}
+
+- (NSDictionary *)dr_find:(BOOL (^)(id _Nonnull, id _Nonnull))block{
+    NSParameterAssert(block);
+    if (!block) return nil;
+    __block NSDictionary *_dic = nil;
+    [self enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if (block(key, obj)) {
+            _dic = @{key: obj};
+            *stop = YES;
+        }
+    }];
+    return _dic;
+}
+
 + (NSDictionary *)dr_dictionaryWithXMLData:(NSData *)xmlData{
     return [[[DRDictionaryParser alloc] init] dictionaryWithData:xmlData];
 }

@@ -68,6 +68,57 @@
     return nil;
 }
 
+- (NSArray *)dr_filter:(BOOL (^)(id _Nonnull, NSUInteger))block{
+    NSParameterAssert(block);
+    if (!block) return @[];
+    NSMutableArray *items = [NSMutableArray array];
+    [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (block(obj, idx)) {
+            [items addObject:obj];
+        }
+    }];
+    return [items copy];
+}
+
+- (NSArray *)dr_map:(id  _Nullable (^)(id _Nonnull, NSUInteger))block{
+    NSParameterAssert(block);
+    if (!block) return @[];
+    NSMutableArray *items = [NSMutableArray array];
+    [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        id _obj = block(obj, idx);
+        if (_obj) {
+            [items addObject:_obj];
+        }
+    }];
+    return [items copy];
+}
+
+- (id)dr_find:(BOOL (^)(id _Nonnull, NSUInteger))block{
+    NSParameterAssert(block);
+    if (!block) return nil;
+    __block id val = nil;
+    [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (block(obj, idx)) {
+            val = obj;
+            *stop = YES;
+        }
+    }];
+    return val;
+}
+
+- (NSUInteger)dr_findIndex:(BOOL (^)(id _Nonnull, NSUInteger))block{
+    NSParameterAssert(block);
+    if (!block) return NSNotFound;
+    __block NSUInteger _idx = NSNotFound;
+    [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (block(obj, idx)) {
+            _idx = idx;
+            *stop = YES;
+        }
+    }];
+    return _idx;
+}
+
 @end
 
 @implementation NSMutableArray (drbox)

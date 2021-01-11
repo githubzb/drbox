@@ -54,6 +54,30 @@
                                                 options:0] dr_utf8String];
 }
 
+- (NSURL *)dr_URL{
+    return [NSURL URLWithString:[[self dr_urlDecodedString] dr_urlQueryEncodedString]];
+}
+
+- (NSDictionary<NSString *,NSString *> *)dr_parameters{
+    NSURLComponents *components = [NSURLComponents componentsWithString:[[self dr_urlDecodedString] dr_urlQueryEncodedString]];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    // percentEncodedQueryItems是保留Encoding的值
+    [components.percentEncodedQueryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [dic setValue:obj.value forKey:obj.name];
+    }];
+    return [dic copy];
+}
+
+- (NSDictionary<NSString *,NSString *> *)dr_parametersForURLDecoding{
+    NSURLComponents *components = [NSURLComponents componentsWithString:[[self dr_urlDecodedString] dr_urlQueryEncodedString]];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    // queryItems是非Encoding的值
+    [components.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [dic setValue:obj.value forKey:obj.name];
+    }];
+    return [dic copy];
+}
+
 - (NSString *)dr_urlEncodedString{
     if ([self respondsToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
         static NSString * const kAFCharactersGeneralDelimitersToEncode = @":#[]@"; // does not include "?" or "/" due to RFC 3986 - Section 3.4

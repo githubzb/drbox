@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		103045CBB2DBCAE25BC4BE58 /* Pods_drbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B802BEDCB65C983D8FE7864 /* Pods_drbox.framework */; };
+		1B1EE19225AC493E008B6B62 /* NSURL+drbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1EE19125AC493E008B6B62 /* NSURL+drbox.m */; };
 		1B1F68DB2590328F0097EBDA /* DRNavigationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F68DA2590328F0097EBDA /* DRNavigationTool.m */; };
 		1B1F691F2591D1440097EBDA /* CADisplayLink+drbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F691E2591D1440097EBDA /* CADisplayLink+drbox.m */; };
 		1B1F69242591D2BB0097EBDA /* DRWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F69232591D2BB0097EBDA /* DRWeakProxy.m */; };
@@ -105,6 +106,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B1EE19025AC493E008B6B62 /* NSURL+drbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+drbox.h"; sourceTree = "<group>"; };
+		1B1EE19125AC493E008B6B62 /* NSURL+drbox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+drbox.m"; sourceTree = "<group>"; };
 		1B1F68D92590328F0097EBDA /* DRNavigationTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRNavigationTool.h; sourceTree = "<group>"; };
 		1B1F68DA2590328F0097EBDA /* DRNavigationTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRNavigationTool.m; sourceTree = "<group>"; };
 		1B1F691D2591D1440097EBDA /* CADisplayLink+drbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CADisplayLink+drbox.h"; sourceTree = "<group>"; };
@@ -716,6 +719,8 @@
 				6D26045424FF2B6200BB0D95 /* NSInvocation+drbox.m */,
 				6DE8A9322515C37900E25E95 /* NSBundle+drbox.h */,
 				6DE8A9332515C37900E25E95 /* NSBundle+drbox.m */,
+				1B1EE19025AC493E008B6B62 /* NSURL+drbox.h */,
+				1B1EE19125AC493E008B6B62 /* NSURL+drbox.m */,
 			);
 			path = foundation;
 			sourceTree = "<group>";
@@ -907,6 +912,7 @@
 				6DF4349424CACE5D0006A7C1 /* UIView+DRLayout.m in Sources */,
 				1B1FFAC8257B2B0A00CA7237 /* DRUserInfo.m in Sources */,
 				6D519EF924C577FB0029C4BB /* DrFoundationCategoryViewController.m in Sources */,
+				1B1EE19225AC493E008B6B62 /* NSURL+drbox.m in Sources */,
 				6D50177424D6F14D008D0FCF /* DRScrollViewController.m in Sources */,
 				6D3A237E24E51B3200EAAC37 /* NSKeyedUnarchiver+drbox.m in Sources */,
 				6D65544424C6991200A16879 /* NSNumber+drbox.m in Sources */,
