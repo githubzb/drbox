@@ -65,6 +65,11 @@ static Class DRSwizzleClass(NSObject *self){
 
 @implementation NSObject (drbox)
 
+
+- (Class)dr_instanceClassForHook{
+    return DRSwizzleClass(self);
+}
+
 - (void)dr_setAssociateCopyValue:(id)value key:(const void *)key{
     objc_setAssociatedObject(self, key, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }

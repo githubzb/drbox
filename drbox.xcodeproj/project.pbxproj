@@ -17,6 +17,11 @@
 		1B1FFABE257B294500CA7237 /* NSObject+DRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFABD257B294500CA7237 /* NSObject+DRModel.m */; };
 		1B1FFAC3257B2A7C00CA7237 /* DRModelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFAC2257B2A7C00CA7237 /* DRModelViewController.m */; };
 		1B1FFAC8257B2B0A00CA7237 /* DRUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFAC7257B2B0A00CA7237 /* DRUserInfo.m */; };
+		1BDD6AA425CFF41C00BAEC48 /* DRDeallocHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD6AA325CFF41C00BAEC48 /* DRDeallocHookViewController.m */; };
+		1BDD6AA925CFF43B00BAEC48 /* DRDeallocTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD6AA825CFF43B00BAEC48 /* DRDeallocTest.m */; };
+		1BDD6AAD25CFF54E00BAEC48 /* DRDeallocTest2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD6AAC25CFF54E00BAEC48 /* DRDeallocTest2.m */; };
+		1BDD6AB125CFF5D700BAEC48 /* DRDeallocTest3.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD6AB025CFF5D700BAEC48 /* DRDeallocTest3.m */; };
+		1BDD6AB525CFF98C00BAEC48 /* DRDeallocTest4.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD6AB425CFF98C00BAEC48 /* DRDeallocTest4.m */; };
 		6D00596624D7ACD100C6B56C /* DRTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D00596524D7ACD100C6B56C /* DRTableView.m */; };
 		6D00596924D7CBD000C6B56C /* DRTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D00596824D7CBD000C6B56C /* DRTableViewController.m */; };
 		6D0DA8F524F20E250040D629 /* DRSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D0DA8F424F20E250040D629 /* DRSecurityPolicy.m */; };
@@ -125,6 +130,16 @@
 		1B1FFAC6257B2B0A00CA7237 /* DRUserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRUserInfo.h; sourceTree = "<group>"; };
 		1B1FFAC7257B2B0A00CA7237 /* DRUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRUserInfo.m; sourceTree = "<group>"; };
 		1B1FFACC257B58AB00CA7237 /* DRModelProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRModelProtocol.h; sourceTree = "<group>"; };
+		1BDD6AA225CFF41C00BAEC48 /* DRDeallocHookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRDeallocHookViewController.h; sourceTree = "<group>"; };
+		1BDD6AA325CFF41C00BAEC48 /* DRDeallocHookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRDeallocHookViewController.m; sourceTree = "<group>"; };
+		1BDD6AA725CFF43B00BAEC48 /* DRDeallocTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRDeallocTest.h; sourceTree = "<group>"; };
+		1BDD6AA825CFF43B00BAEC48 /* DRDeallocTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRDeallocTest.m; sourceTree = "<group>"; };
+		1BDD6AAB25CFF54E00BAEC48 /* DRDeallocTest2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRDeallocTest2.h; sourceTree = "<group>"; };
+		1BDD6AAC25CFF54E00BAEC48 /* DRDeallocTest2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRDeallocTest2.m; sourceTree = "<group>"; };
+		1BDD6AAF25CFF5D700BAEC48 /* DRDeallocTest3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRDeallocTest3.h; sourceTree = "<group>"; };
+		1BDD6AB025CFF5D700BAEC48 /* DRDeallocTest3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRDeallocTest3.m; sourceTree = "<group>"; };
+		1BDD6AB325CFF98C00BAEC48 /* DRDeallocTest4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRDeallocTest4.h; sourceTree = "<group>"; };
+		1BDD6AB425CFF98C00BAEC48 /* DRDeallocTest4.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRDeallocTest4.m; sourceTree = "<group>"; };
 		5B802BEDCB65C983D8FE7864 /* Pods_drbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_drbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D00596424D7ACD100C6B56C /* DRTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRTableView.h; sourceTree = "<group>"; };
 		6D00596524D7ACD100C6B56C /* DRTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRTableView.m; sourceTree = "<group>"; };
@@ -341,6 +356,23 @@
 			path = model;
 			sourceTree = "<group>";
 		};
+		1BDD6AA125CFF3DB00BAEC48 /* deallocHook */ = {
+			isa = PBXGroup;
+			children = (
+				1BDD6AA225CFF41C00BAEC48 /* DRDeallocHookViewController.h */,
+				1BDD6AA325CFF41C00BAEC48 /* DRDeallocHookViewController.m */,
+				1BDD6AA725CFF43B00BAEC48 /* DRDeallocTest.h */,
+				1BDD6AA825CFF43B00BAEC48 /* DRDeallocTest.m */,
+				1BDD6AAB25CFF54E00BAEC48 /* DRDeallocTest2.h */,
+				1BDD6AAC25CFF54E00BAEC48 /* DRDeallocTest2.m */,
+				1BDD6AAF25CFF5D700BAEC48 /* DRDeallocTest3.h */,
+				1BDD6AB025CFF5D700BAEC48 /* DRDeallocTest3.m */,
+				1BDD6AB325CFF98C00BAEC48 /* DRDeallocTest4.h */,
+				1BDD6AB425CFF98C00BAEC48 /* DRDeallocTest4.m */,
+			);
+			path = deallocHook;
+			sourceTree = "<group>";
+		};
 		6D0DA8F224F20E040040D629 /* security */ = {
 			isa = PBXGroup;
 			children = (
@@ -440,6 +472,7 @@
 		6D1EB22B24BDB08100DF8952 /* demo */ = {
 			isa = PBXGroup;
 			children = (
+				1BDD6AA125CFF3DB00BAEC48 /* deallocHook */,
 				1B1FFAC0257B2A6100CA7237 /* model */,
 				6D5449DD256BF07200102AAA /* kvo */,
 				6D566B822557E708005DBFD2 /* notificaion */,
@@ -911,6 +944,7 @@
 				6D50177124D6ED05008D0FCF /* UIScrollView+DRLayout.m in Sources */,
 				6DF4349424CACE5D0006A7C1 /* UIView+DRLayout.m in Sources */,
 				1B1FFAC8257B2B0A00CA7237 /* DRUserInfo.m in Sources */,
+				1BDD6AA425CFF41C00BAEC48 /* DRDeallocHookViewController.m in Sources */,
 				6D519EF924C577FB0029C4BB /* DrFoundationCategoryViewController.m in Sources */,
 				1B1EE19225AC493E008B6B62 /* NSURL+drbox.m in Sources */,
 				6D50177424D6F14D008D0FCF /* DRScrollViewController.m in Sources */,
@@ -952,7 +986,9 @@
 				6DE2896024E8C30500D3D103 /* DRCGTools.m in Sources */,
 				6D12CAF72518491C00B27179 /* DRVideoViewController.m in Sources */,
 				6D64D277256A879F00DBD4C3 /* NSObject+DRKVO.m in Sources */,
+				1BDD6AB125CFF5D700BAEC48 /* DRDeallocTest3.m in Sources */,
 				6D519EFC24C592DA0029C4BB /* NSString+drbox.m in Sources */,
+				1BDD6AB525CFF98C00BAEC48 /* DRDeallocTest4.m in Sources */,
 				6DE2896B24E92E7200D3D103 /* DRImageDrawDemo.m in Sources */,
 				6D1EB22024BD9D8E00DF8952 /* main.m in Sources */,
 				1B1F69282591DB610097EBDA /* DRTimerViewController.m in Sources */,
@@ -964,8 +1000,10 @@
 				6D34B73F24D64AD00056C53E /* DRLayoutViewController.m in Sources */,
 				6D65544724C6DD6700A16879 /* NSArray+drbox.m in Sources */,
 				6DE2A21D24D56995009DB24E /* DRUnfairLockViewController.m in Sources */,
+				1BDD6AAD25CFF54E00BAEC48 /* DRDeallocTest2.m in Sources */,
 				6DEAD705250727C7005EEE87 /* UIDevice+drbox.m in Sources */,
 				6DE2896324E8D34900D3D103 /* DRCGToolsViewController.m in Sources */,
+				1BDD6AA925CFF43B00BAEC48 /* DRDeallocTest.m in Sources */,
 				6D26045524FF2B6200BB0D95 /* NSInvocation+drbox.m in Sources */,
 				6DEAD70825077117005EEE87 /* DRKeyChainStore.m in Sources */,
 				6DE9CB0D24C036AB006C869B /* NSObject+drbox.m in Sources */,

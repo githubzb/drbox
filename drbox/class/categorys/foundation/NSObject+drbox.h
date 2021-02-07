@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class DRClassInfo;
 @interface NSObject (drbox)
 
+/// 用于hook实例对象的Class
+@property (nonatomic, readonly) Class dr_instanceClassForHook;
+
 /**
  为对象添加关联属性，并赋予值
  

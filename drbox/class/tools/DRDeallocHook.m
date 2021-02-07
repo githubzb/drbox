@@ -14,15 +14,6 @@
 
 static const int dr_dealloc_observer_key;
 
-static NSMutableSet *DrSwizzledClasses() {
-    static dispatch_once_t onceToken;
-    static NSMutableSet *swizzledClasses = nil;
-    dispatch_once(&onceToken, ^{
-        swizzledClasses = [[NSMutableSet alloc] init];
-    });
-    return swizzledClasses;
-}
-
 @interface _DRDeallocObserver : NSObject
 
 @property (nonatomic, weak) id target;
@@ -66,11 +57,11 @@ static NSMutableSet *DrSwizzledClasses() {
     if (!hook) {
         hook = [DRDeallocHook alloc];
         [obj dr_setAssociateStrongValue:hook key:&dr_dealloc_observer_key];
+        [self swizzleDeallocForObject:obj];
     }
     _DRDeallocObserver *observer = [_DRDeallocObserver observerWithTarget:obs
                                                                  selector:aSelector];
     [[hook observers] addObject:observer];
-    [self swizzleDeallocIfNeededForClass:object_getClass(obj)];
 }
 
 + (void)addDeallocHookToObject:(id)obj withBlock:(DRDeallocHookBlock)block{
@@ -79,10 +70,10 @@ static NSMutableSet *DrSwizzledClasses() {
     if (!hook) {
         hook = [DRDeallocHook alloc];
         [obj dr_setAssociateStrongValue:hook key:&dr_dealloc_observer_key];
+        [self swizzleDeallocForObject:obj];
     }
     _DRDeallocObserver *observer = [_DRDeallocObserver observerWithBlock:block];
     [[hook observers] addObject:observer];
-    [self swizzleDeallocIfNeededForClass:object_getClass(obj)];
 }
 
 #pragma mark - private
@@ -107,39 +98,35 @@ static NSMutableSet *DrSwizzledClasses() {
     [_observers removeAllObjects];
 }
 
-+ (void)swizzleDeallocIfNeededForClass:(Class)cls{
-    @synchronized (DrSwizzledClasses()) {
-        NSString *className = NSStringFromClass(cls);
-        if ([DrSwizzledClasses() containsObject:className]) return;
-        
-        SEL deallocSelector = sel_registerName("dealloc");
-        // 定义一个原始方法函数指针
-        __block void (*originalDealloc)(__unsafe_unretained id, SEL) = NULL;
-        // 定义一个block，用于替换原始的dealloc方法实现
-        id newDealloc = ^(__unsafe_unretained id receiver) {
-            DRDeallocHook *hook = [receiver dr_associateValueForKey:&dr_dealloc_observer_key];
-            if (hook) [hook execObserverWithHookObject:receiver];
-            // 回调原始方法
-            if (originalDealloc == NULL) {
-                // cls的原始方法没有实现，调用父类的dealloc方法
-                struct objc_super superInfo = {
-                    .receiver = receiver,
-                    .super_class = class_getSuperclass(cls)
-                };
-                void (*msgSendSuper)(struct objc_super *, SEL) = (__typeof__(msgSendSuper))objc_msgSendSuper;
-                msgSendSuper(&superInfo, deallocSelector);
-            }else{
-                originalDealloc(receiver, deallocSelector);
-            }
-        };
-        IMP newDeallocImp = imp_implementationWithBlock(newDealloc);
-        if (!class_addMethod(cls, deallocSelector, newDeallocImp, "v@:")) {
-            // cls的dealloc方法已经存在，被实现，替换dealloc的方法实现
-            Method orgM = class_getInstanceMethod(cls, deallocSelector);
-            originalDealloc = (__typeof__(originalDealloc))method_getImplementation(orgM);
-            originalDealloc = (__typeof__(originalDealloc))method_setImplementation(orgM, newDeallocImp);
++ (void)swizzleDeallocForObject:(id)obj{
+    if (!obj) return;
+    Class cls = [obj dr_instanceClassForHook];
+    SEL deallocSelector = sel_registerName("dealloc");
+    // 定义一个原始方法函数指针
+    __block void (*originalDealloc)(__unsafe_unretained id, SEL) = NULL;
+    // 定义一个block，用于替换原始的dealloc方法实现
+    id newDealloc = ^(__unsafe_unretained id receiver) {
+        DRDeallocHook *hook = [receiver dr_associateValueForKey:&dr_dealloc_observer_key];
+        if (hook) [hook execObserverWithHookObject:receiver];
+        // 回调原始方法
+        if (originalDealloc == NULL) {
+            // cls的原始方法没有实现，调用父类的dealloc方法
+            struct objc_super superInfo = {
+                .receiver = receiver,
+                .super_class = class_getSuperclass(cls)
+            };
+            void (*msgSendSuper)(struct objc_super *, SEL) = (__typeof__(msgSendSuper))objc_msgSendSuper;
+            msgSendSuper(&superInfo, deallocSelector);
+        }else{
+            originalDealloc(receiver, deallocSelector);
         }
-        [DrSwizzledClasses() addObject:className];
+    };
+    IMP newDeallocImp = imp_implementationWithBlock(newDealloc);
+    if (!class_addMethod(cls, deallocSelector, newDeallocImp, "v@:")) {
+        // cls的dealloc方法已经存在，被实现，替换dealloc的方法实现
+        Method orgM = class_getInstanceMethod(cls, deallocSelector);
+        originalDealloc = (__typeof__(originalDealloc))method_getImplementation(orgM);
+        originalDealloc = (__typeof__(originalDealloc))method_setImplementation(orgM, newDeallocImp);
     }
 }
 

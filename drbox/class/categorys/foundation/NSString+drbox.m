@@ -219,7 +219,7 @@
     return [self rangeOfString:string].location != NSNotFound;
 }
 
-- (BOOL)dr_containsCharacterSet:(NSCharacterSet *)set{
+- (BOOL)rdr_containsCharacterSet:(NSCharacterSet *)set{
     if (!set) return NO;
     return [self rangeOfCharacterFromSet:set].location != NSNotFound;
 }
