@@ -15,6 +15,9 @@ typedef void(^DRDeallocHookBlock)(id hookObj);
 
 @interface DRDeallocHook : NSProxy
 
+/// 判断obj实例是否已经hook
++ (BOOL)isHookForObject:(id)obj;
+
 /**
  hook obj实例的dealloc方法
  

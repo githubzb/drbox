@@ -51,6 +51,11 @@ static const int dr_dealloc_observer_key;
 
 @implementation DRDeallocHook
 
++ (BOOL)isHookForObject:(id)obj{
+    if (!obj) return NO;
+    return [obj dr_associateValueForKey:&dr_dealloc_observer_key] != nil;
+}
+
 + (void)addDeallocHookToObject:(id)obj observer:(id)obs observerSelector:(SEL)aSelector{
     if (!obj) return;
     DRDeallocHook *hook = [obj dr_associateValueForKey:&dr_dealloc_observer_key];
