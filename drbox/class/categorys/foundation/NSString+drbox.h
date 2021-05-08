@@ -138,6 +138,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 将字符串转成NSNumber对象，转失败返回nil
 - (nullable NSNumber *)dr_numberValue;
 
+/// 判断当前字符串是否为16进制
+- (BOOL)dr_isHexString;
+
 @end
 
 NS_ASSUME_NONNULL_END

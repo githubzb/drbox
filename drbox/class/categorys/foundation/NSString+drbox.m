@@ -228,4 +228,16 @@
     return [NSNumber dr_numberWithString:self];
 }
 
+- (BOOL)dr_isHexString{
+    NSString *rexStr = @"(^[0-9A-Fa-f][0-9A-Fa-f]*$)|(^0x([0-9A-Fa-f][0-9A-Fa-f])*$)";
+    NSRegularExpression *rex =
+    [NSRegularExpression regularExpressionWithPattern:rexStr
+                                              options:NSRegularExpressionCaseInsensitive
+                                                error:nil];
+    NSRange range = [rex rangeOfFirstMatchInString:self
+                                           options:NSMatchingReportProgress
+                                             range:NSMakeRange(0, self.length)];
+    return range.location==0&&range.length==self.length;
+}
+
 @end
