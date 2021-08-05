@@ -9,6 +9,7 @@
 #import "NSString+drbox.h"
 #import "NSData+drbox.h"
 #import "NSNumber+drbox.h"
+#import "dr_base64.h"
 
 @implementation NSString (drbox)
 
@@ -47,11 +48,27 @@
 }
 
 - (NSString *)dr_base64EncodedString{
-    return [[self dr_utf8Data] base64EncodedStringWithOptions:0];
+    if (@available(iOS 7.0, *)) {
+        return [[self dr_utf8Data] base64EncodedStringWithOptions:0];
+    }
+    NSData *data = [self dr_utf8Data];
+    NSMutableData *output = [NSMutableData dataWithLength:dr_base64_length(data.length)];
+    if (dr_base64_encode(data.bytes, data.length, output.mutableBytes) == 0) {
+        return [output dr_utf8String];
+    }
+    return nil;
 }
 - (NSString *)dr_base64DecodedString{
-    return [[[NSData alloc] initWithBase64EncodedString:self
-                                                options:0] dr_utf8String];
+    if (@available(iOS 7.0, *)) {
+        return [[[NSData alloc] initWithBase64EncodedString:self
+                                                    options:0] dr_utf8String];
+    }
+    NSData *data = [self dr_utf8Data];
+    NSMutableData *output = [NSMutableData dataWithLength:dr_data_length(data.bytes, data.length)];
+    if (dr_base64_decode(data.bytes, data.length, output.mutableBytes) == 0) {
+        return [output dr_utf8String];
+    }
+    return nil;
 }
 
 - (NSURL *)dr_URL{

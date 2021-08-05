@@ -119,8 +119,10 @@
     NSString *str = @"base64加密前的数据base64加密前的数据base64加密前的数据base64加密前的数据base64加密前的数据";
     NSString *base64Str = [str dr_base64EncodedString];
     NSLog(@"base64编码：%@", base64Str);
+    NSAssert(base64Str != nil, @"base64 编码失败");
     NSString *base64DecodeStr = [base64Str dr_base64DecodedString];
     NSLog(@"base64解码：%@", base64DecodeStr);
+    NSAssert([base64DecodeStr isEqualToString:str], @"base64 解码失败");
     
     UIFont *font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
     CGSize size = [str dr_sizeForFont:font size:CGSizeMake(100, 1000) mode:NSLineBreakByWordWrapping];

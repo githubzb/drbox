@@ -26,9 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)dr_hmacSHA512StringWithKey:(NSString *)key;
 
 /// base64编码
-- (nullable NSString *)dr_base64EncodedString API_AVAILABLE(ios(7.0));
+- (nullable NSString *)dr_base64EncodedString;
 /// base64解码
-- (nullable NSString *)dr_base64DecodedString  API_AVAILABLE(ios(7.0));
+- (nullable NSString *)dr_base64DecodedString;
 
 - (nullable NSURL *)dr_URL;
 /// 返回URL参数

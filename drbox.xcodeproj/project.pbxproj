@@ -17,6 +17,7 @@
 		1B1FFABE257B294500CA7237 /* NSObject+DRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFABD257B294500CA7237 /* NSObject+DRModel.m */; };
 		1B1FFAC3257B2A7C00CA7237 /* DRModelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFAC2257B2A7C00CA7237 /* DRModelViewController.m */; };
 		1B1FFAC8257B2B0A00CA7237 /* DRUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1FFAC7257B2B0A00CA7237 /* DRUserInfo.m */; };
+		1B2EDF4326BA9C1900A0398C /* dr_base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B2EDF4226BA9C1900A0398C /* dr_base64.c */; };
 		1BDD6AA425CFF41C00BAEC48 /* DRDeallocHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD6AA325CFF41C00BAEC48 /* DRDeallocHookViewController.m */; };
 		1BDD6AA925CFF43B00BAEC48 /* DRDeallocTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD6AA825CFF43B00BAEC48 /* DRDeallocTest.m */; };
 		1BDD6AAD25CFF54E00BAEC48 /* DRDeallocTest2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD6AAC25CFF54E00BAEC48 /* DRDeallocTest2.m */; };
@@ -130,6 +131,8 @@
 		1B1FFAC6257B2B0A00CA7237 /* DRUserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRUserInfo.h; sourceTree = "<group>"; };
 		1B1FFAC7257B2B0A00CA7237 /* DRUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRUserInfo.m; sourceTree = "<group>"; };
 		1B1FFACC257B58AB00CA7237 /* DRModelProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRModelProtocol.h; sourceTree = "<group>"; };
+		1B2EDF4126BA9C1900A0398C /* dr_base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dr_base64.h; sourceTree = "<group>"; };
+		1B2EDF4226BA9C1900A0398C /* dr_base64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dr_base64.c; sourceTree = "<group>"; };
 		1BDD6AA225CFF41C00BAEC48 /* DRDeallocHookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRDeallocHookViewController.h; sourceTree = "<group>"; };
 		1BDD6AA325CFF41C00BAEC48 /* DRDeallocHookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DRDeallocHookViewController.m; sourceTree = "<group>"; };
 		1BDD6AA725CFF43B00BAEC48 /* DRDeallocTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DRDeallocTest.h; sourceTree = "<group>"; };
@@ -356,6 +359,15 @@
 			path = model;
 			sourceTree = "<group>";
 		};
+		1B2EDF4026BA9BED00A0398C /* base64 */ = {
+			isa = PBXGroup;
+			children = (
+				1B2EDF4126BA9C1900A0398C /* dr_base64.h */,
+				1B2EDF4226BA9C1900A0398C /* dr_base64.c */,
+			);
+			path = base64;
+			sourceTree = "<group>";
+		};
 		1BDD6AA125CFF3DB00BAEC48 /* deallocHook */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,6 +577,7 @@
 		6D85C70224C1C70E00F1B6AF /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				1B2EDF4026BA9BED00A0398C /* base64 */,
 				6DE9EA4E2514536000390E05 /* keychains */,
 				6DDAF60624C9838C005575A0 /* DRDictionaryParser.h */,
 				6DDAF60724C9838C005575A0 /* DRDictionaryParser.m */,
@@ -940,6 +953,7 @@
 				6DE9BDD724DCDF8400951E8E /* DRMemoryCache.m in Sources */,
 				6DE0317324E7837800266235 /* UIImage+drbox.m in Sources */,
 				6DE9BDD424DCDF3300951E8E /* DRCache.m in Sources */,
+				1B2EDF4326BA9C1900A0398C /* dr_base64.c in Sources */,
 				6DE2896624E8D4F300D3D103 /* UIView+drbox.m in Sources */,
 				6D50177124D6ED05008D0FCF /* UIScrollView+DRLayout.m in Sources */,
 				6DF4349424CACE5D0006A7C1 /* UIView+DRLayout.m in Sources */,
